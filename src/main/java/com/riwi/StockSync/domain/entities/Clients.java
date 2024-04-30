@@ -1,6 +1,11 @@
 package com.riwi.StockSync.domain.entities;
 
+import org.w3c.dom.DocumentType;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,18 +19,22 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Clients {
+public class Clients{
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
 
+    @Column(length = 40, nullable = false)
     private String name;
 
+    @Column(length = 90, nullable = false)
     private String email;
 
+    @Column(length = 11, nullable = false)
     private int phoneNumber;
 
-    private String documentNumber;
+    @Enumerated(EnumType.STRING)
+    private DocumentType documentType;
 
 }
