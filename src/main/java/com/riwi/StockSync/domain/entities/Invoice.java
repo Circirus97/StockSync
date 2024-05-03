@@ -34,10 +34,10 @@ public class Invoice {
     @JoinColumn(name="client_id", referencedColumnName = "id")
     private Clients clients;
 
-    @OneToMany(mappedBy = "items", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = false)
+    @OneToMany(mappedBy = "invoice", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = false)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private List<Item> item;
+    private List<Item> itemList;
 
 
 }

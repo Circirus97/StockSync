@@ -1,5 +1,6 @@
 package com.riwi.StockSync.api.controllers;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/employees")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class EmployeeController {
 
     @Autowired
@@ -72,9 +73,6 @@ public class EmployeeController {
     ){
         return ResponseEntity.ok(this.employeeService.update(employee, id));
     }
-
-
-
 
     
 }
