@@ -31,12 +31,29 @@ public class Store {
     private String location;
 
 
-
     @OneToMany(mappedBy = "store",fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = false)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
 
     private List<Employee>employee;
+
+
+    @OneToMany(mappedBy = "store", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = false)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<Invoice> invoices;
+
+
+
+
+
+
+
+
+
+
+
+
 
     
 }
