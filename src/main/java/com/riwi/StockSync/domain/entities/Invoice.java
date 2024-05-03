@@ -2,11 +2,10 @@ package com.riwi.StockSync.domain.entities;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 
 @Entity(name = "invoices")
@@ -33,8 +32,12 @@ public class Invoice {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="client_id", referencedColumnName = "id")
-    private Client client;
+    private Clients clients;
 
+    @OneToMany(mappedBy = "items", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = false)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<Item> item;
 
 
 }
