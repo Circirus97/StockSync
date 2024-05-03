@@ -1,7 +1,6 @@
 package com.riwi.StockSync.domain.entities;
 
-import org.w3c.dom.DocumentType;
-
+import com.riwi.StockSync.util.enums.DocumentType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
