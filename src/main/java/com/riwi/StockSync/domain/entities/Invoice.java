@@ -39,5 +39,4 @@ public class Invoice {
     @EqualsAndHashCode.Exclude
     private List<Item> itemList;
 
-
 }
