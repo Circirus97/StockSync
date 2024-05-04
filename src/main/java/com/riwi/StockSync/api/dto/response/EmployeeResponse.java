@@ -9,14 +9,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class EmployeeResponse {
-
     private String id;
     private String name;
     private String identity;
     private String contact;
-    private StoreToEmployeeResponse store;
-
     
 }

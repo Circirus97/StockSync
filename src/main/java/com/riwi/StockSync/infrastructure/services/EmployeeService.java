@@ -1,25 +1,21 @@
 package com.riwi.StockSync.infrastructure.services;
 
 
-
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Service;
-
 import com.riwi.StockSync.api.dto.request.EmployeeRequest;
-import com.riwi.StockSync.api.dto.response.EmployeeResponse;
-
-import com.riwi.StockSync.api.dto.response.StoreToEmployeeResponse;
+import com.riwi.StockSync.api.dto.response.EmployeeToStoreResponse;
+import com.riwi.StockSync.api.dto.response.StoreResponse;
 import com.riwi.StockSync.domain.entities.Employee;
 import com.riwi.StockSync.domain.entities.Store;
 import com.riwi.StockSync.domain.repositories.EmployeeRepository;
 import com.riwi.StockSync.domain.repositories.StoreRepository;
 import com.riwi.StockSync.infrastructure.services.interfaces.IEmployeeService;
 import com.riwi.StockSync.util.exceptions.IdNotFoundExeption;
-
 import lombok.AllArgsConstructor;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
@@ -30,7 +26,7 @@ public class EmployeeService implements IEmployeeService {
     private final StoreRepository storeRepository;
     
     @Override
-    public Page<EmployeeResponse> getAll(int page, int size) {
+    public Page<EmployeeToStoreResponse> getAll(int page, int size) {
         if(page<0)
         page = 0;
        PageRequest pagination = PageRequest.of(page, size);
@@ -39,7 +35,7 @@ public class EmployeeService implements IEmployeeService {
     }
 
     @Override
-    public EmployeeResponse create(EmployeeRequest request) {
+    public EmployeeToStoreResponse create(EmployeeRequest request) {
         /*convertimos la compañia que corresponde con el id que esta dentro del request */
         Store store = this.storeRepository.findById(request.getStoreId()).orElseThrow(()-> new IdNotFoundExeption("store"));
 
@@ -51,7 +47,7 @@ public class EmployeeService implements IEmployeeService {
     }
 
     @Override
-    public EmployeeResponse update(EmployeeRequest request, String id) {
+    public EmployeeToStoreResponse update(EmployeeRequest request, String id) {
         Employee employeeToUpdate = this.find(id);
 
         Employee employee =this.requestToEntity(request, employeeToUpdate);
@@ -65,18 +61,18 @@ public class EmployeeService implements IEmployeeService {
     }
 
     @Override
-    public EmployeeResponse getById(String id) {
+    public EmployeeToStoreResponse getById(String id) {
         Employee employee = this.find(id);
         return this.entityToResponse(employee);
     }
 
 
-    private EmployeeResponse entityToResponse(Employee entity){
-        EmployeeResponse response = new EmployeeResponse();
+    private EmployeeToStoreResponse entityToResponse(Employee entity){
+        EmployeeToStoreResponse response = new EmployeeToStoreResponse();
 
         BeanUtils.copyProperties(entity, response);
 
-        StoreToEmployeeResponse storyDto = new StoreToEmployeeResponse();
+        StoreResponse storyDto = new StoreResponse();
 
         BeanUtils.copyProperties(entity.getStore(), storyDto);
 

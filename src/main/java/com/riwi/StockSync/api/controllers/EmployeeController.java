@@ -1,26 +1,13 @@
 package com.riwi.StockSync.api.controllers;
 
+import com.riwi.StockSync.api.dto.request.EmployeeRequest;
+import com.riwi.StockSync.api.dto.response.EmployeeToStoreResponse;
+import com.riwi.StockSync.infrastructure.services.interfaces.IEmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.riwi.StockSync.api.dto.request.EmployeeRequest;
-import com.riwi.StockSync.api.dto.response.EmployeeResponse;
-
-import com.riwi.StockSync.infrastructure.services.interfaces.IEmployeeService;
-
-import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/employees")
@@ -32,7 +19,7 @@ public class EmployeeController {
 
     @GetMapping
     // como es paginacion recibe 2 parametros pagina y size, con los requestparam lo que digo al programa es que si no me dan los valores los pase por defecto
-    public ResponseEntity<Page<EmployeeResponse>> getAll(
+    public ResponseEntity<Page<EmployeeToStoreResponse>> getAll(
         @RequestParam(defaultValue = "1") int page,
         @RequestParam(defaultValue = "3") int size){
             return ResponseEntity.ok(this.employeeService.getAll(page-1, size));
@@ -40,7 +27,7 @@ public class EmployeeController {
     }
 
     @GetMapping(path = "/{id}")
-     public ResponseEntity<EmployeeResponse>get(
+     public ResponseEntity<EmployeeToStoreResponse>get(
         @PathVariable String id
     ){
         return ResponseEntity.ok(this.employeeService.getById(id));
@@ -48,7 +35,7 @@ public class EmployeeController {
 
 
     @PostMapping
-    public ResponseEntity <EmployeeResponse> insert(
+    public ResponseEntity <EmployeeToStoreResponse> insert(
     
         @RequestBody EmployeeRequest employee
     ){
@@ -66,7 +53,7 @@ public class EmployeeController {
 
 
      @PutMapping(path="/{id}")
-    public ResponseEntity<EmployeeResponse> update(
+    public ResponseEntity<EmployeeToStoreResponse> update(
 
         @PathVariable String id,
         @RequestBody EmployeeRequest employee

@@ -1,25 +1,13 @@
 package com.riwi.StockSync.api.controllers;
 
+import com.riwi.StockSync.api.dto.request.StoreRequest;
+import com.riwi.StockSync.api.dto.response.StoreToEmployeeResponse;
+import com.riwi.StockSync.infrastructure.services.interfaces.IStoreService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.riwi.StockSync.api.dto.request.StoreRequest;
-import com.riwi.StockSync.api.dto.response.StoreResponse;
-import com.riwi.StockSync.infrastructure.services.interfaces.IStoreService;
-
-import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path="/store")
@@ -32,7 +20,7 @@ public class StoreController {
 
     @GetMapping
     // como es paginacion recibe 2 parametros pagina y size, con los requestparam lo que digo al programa es que si no me dan los valores los pase por defecto
-    public ResponseEntity<Page<StoreResponse>> getAll(
+    public ResponseEntity<Page<StoreToEmployeeResponse>> getAll(
         @RequestParam(defaultValue = "1") int page,
         @RequestParam(defaultValue = "3") int size){
             return ResponseEntity.ok(this.storeService.getAll(page-1, size));
@@ -40,7 +28,7 @@ public class StoreController {
     }
 
     @GetMapping(path="/{id}")
-    public ResponseEntity<StoreResponse> get(
+    public ResponseEntity<StoreToEmployeeResponse> get(
         @PathVariable String id
     ){
         return ResponseEntity.ok(this.storeService.getById(id));
@@ -48,7 +36,7 @@ public class StoreController {
 
 
     @PostMapping
-    public ResponseEntity<StoreResponse> create(
+    public ResponseEntity<StoreToEmployeeResponse> create(
         
         @RequestBody StoreRequest store
     ){
@@ -66,7 +54,7 @@ public class StoreController {
 
    @PutMapping(path="/{id}")
 
-    public ResponseEntity<StoreResponse> update(
+    public ResponseEntity<StoreToEmployeeResponse> update(
         @PathVariable String id,
         @RequestBody StoreRequest store
     ){
