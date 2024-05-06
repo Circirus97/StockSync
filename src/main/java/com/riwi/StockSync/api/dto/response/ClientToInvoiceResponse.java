@@ -2,7 +2,7 @@ package com.riwi.StockSync.api.dto.response;
 
 import java.util.List;
 
-import com.riwi.StockSync.domain.entities.Invoice;
+// import com.riwi.StockSync.domain.entities.Invoice;
 import com.riwi.StockSync.util.enums.DocumentType;
 
 import lombok.AllArgsConstructor;
@@ -21,6 +21,6 @@ public class ClientToInvoiceResponse {
     private String mail;
     private String phone;
     private DocumentType documentType;
-    private List<Invoice> invoices;
+    private List<InvoiceResponse> invoices;
 
 }
