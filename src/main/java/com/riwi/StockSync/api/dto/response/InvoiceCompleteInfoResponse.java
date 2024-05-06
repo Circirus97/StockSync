@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Builder
@@ -22,10 +23,10 @@ public class InvoiceCompleteInfoResponse {
 
     private StoreResponse store;
 
-    private  EmployeeResponse employee;
+    private EmployeeResponse employee;
 
-/*    private ClientResponse client;
+    private ClientResponse client;
 
-    private List<ItemResponse> itemList;*/
+    private List<ItemResponse> itemList;
 
 }
