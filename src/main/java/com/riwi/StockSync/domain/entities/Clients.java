@@ -1,10 +1,14 @@
 package com.riwi.StockSync.domain.entities;
 
+import java.util.List;
+
 import com.riwi.StockSync.util.enums.DocumentType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Table(name = "clients")
@@ -28,5 +32,10 @@ public class Clients{
 
     @Enumerated(EnumType.STRING)
     private DocumentType documentType;
+
+    @OneToMany(mappedBy = "client",fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = false)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<Invoice> invoices;
 
 }
