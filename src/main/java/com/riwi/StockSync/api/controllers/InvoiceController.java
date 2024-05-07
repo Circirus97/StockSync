@@ -15,7 +15,7 @@ import java.util.Map;
 @RestController
 @RequestMapping(path = "/invoice")
 @RequiredArgsConstructor
-public class InvoiceService {
+public class InvoiceController {
 
     private final IInvoiceService iInvoiceService;
 

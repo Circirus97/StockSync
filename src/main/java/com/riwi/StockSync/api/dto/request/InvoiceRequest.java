@@ -24,5 +24,7 @@ public class InvoiceRequest {
 
     private String clientId;
 
+    private String storeId;
+
     private List<ItemRequest> itemList;
 }

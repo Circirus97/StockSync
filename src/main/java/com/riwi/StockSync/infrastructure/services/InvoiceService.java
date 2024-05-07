@@ -1,10 +1,9 @@
 package com.riwi.StockSync.infrastructure.services;
 
 import com.riwi.StockSync.api.dto.request.InvoiceRequest;
-import com.riwi.StockSync.api.dto.response.EmployeeResponse;
-import com.riwi.StockSync.api.dto.response.InvoiceCompleteInfoResponse;
-import com.riwi.StockSync.api.dto.response.StoreResponse;
+import com.riwi.StockSync.api.dto.response.*;
 import com.riwi.StockSync.domain.entities.Invoice;
+import com.riwi.StockSync.domain.entities.Store;
 import com.riwi.StockSync.domain.repositories.EmployeeRepository;
 import com.riwi.StockSync.domain.repositories.InvoiceRepository;
 import com.riwi.StockSync.domain.repositories.StoreRepository;
@@ -17,6 +16,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -39,65 +40,75 @@ public class InvoiceService implements IInvoiceService {
 
     @Override
     public InvoiceCompleteInfoResponse create(InvoiceRequest request) {
-        return null;
+        Store store = this.storeRepository.findById(request.getStoreId())
+                .orElseThrow(()-> new IdNotFoundExeption("Store"));
+
+        Invoice invoice = this.requestToInvoice(request, new Invoice());
+
+        invoice.setStore(store);
+
+        return this.entityToResponse(this.invoiceRepository.save(invoice));
     }
 
     @Override
-    public InvoiceCompleteInfoResponse update(InvoiceRequest request, String s) {
-        return null;
+    public InvoiceCompleteInfoResponse update(InvoiceRequest request, String id) {
+        Invoice invoice = this.find(id);
+
+        Store store = this.storeRepository.findById(request.getStoreId())
+                .orElseThrow(()-> new IdNotFoundExeption("Store"));
+
+        invoice = this.requestToInvoice(request, invoice);
+
+        invoice.setStore(store);
+
+        return this.entityToResponse(this.invoiceRepository.save(invoice));
+
     }
 
     @Override
-    public void delete(String s) {
+    public void delete(String id) {
+        Invoice invoice = this.find(id);
 
+        this.invoiceRepository.delete(invoice);
     }
 
     @Override
-    public InvoiceCompleteInfoResponse getById(String s) {
-        return null;
+    public InvoiceCompleteInfoResponse getById(String id) {
+        Invoice invoice = this.find(id);
+        return entityToResponse(invoice);
     }
 
-    private InvoiceCompleteInfoResponse entityToResponse(Invoice entity) {
-        // Creamos instancia del DTO de factura
-        InvoiceCompleteInfoResponse response = new InvoiceCompleteInfoResponse();
-
-        // Copiar todas las propiedades de la entidad en el DTO
-        BeanUtils.copyProperties(entity, response);
-
-        // Creamos instancia del DTO de tienda
-        StoreResponse storeDTO = new StoreResponse();
-        // Copiar todas las propiedades de la tienda que se encuentra dentro de la entidad (Invoice) en el DTO de respuesta
-        BeanUtils.copyProperties(entity.getStore(), storeDTO);
-        // Agregamos el DTO lleno a la respuesta final
-        response.setStore(storeDTO);
-
-        // Creamos instancia del DTO de empleado
-        EmployeeResponse employeeDTO = new EmployeeResponse();
-        // Copiar todas las propiedades del empleado que se encuentra dentro de la entidad (Invoice) en el DTO de respuesta
-        BeanUtils.copyProperties(entity.getEmployee(), employeeDTO);
-        // Agregamos el DTO lleno a la respuesta final
-        response.setEmployee(employeeDTO);
-
-/*        // Creamos instancia del DTO de cliente
-        ClientResponse clientDTO = new ClientResponse();
-        // Copiar todas las propiedades del cliente que se encuentra dentro de la entidad (Invoice) en el DTO de respuesta
-        BeanUtils.copyProperties(entity.getClient(), clientDTO);
-        // Agregamos el DTO lleno a la respuesta final
-        response.setClient(clientDTO);*/
-
-/*        // Mapeamos la lista de items de la factura
-        List<ItemResponse> itemList = entity.getItemList().stream()
-                .map(item -> {
-                    ItemResponse itemResponse = new ItemResponse();
-                    BeanUtils.copyProperties(item, itemResponse);
-                    return itemResponse;
-                })
-                .collect(Collectors.toList());
-
-        // Asignamos la lista mapeada al DTO de respuesta
-        response.setItemList(itemList);*/
-
-        return response;
+    private InvoiceCompleteInfoResponse entityToResponse(Invoice invoice) {
+        return  InvoiceCompleteInfoResponse.builder()
+                .store(StoreResponse.builder()
+                        .name(invoice.getStore().getName())
+                        .location(invoice.getStore().getLocation())
+                        .build())
+                .client(ClientResponse.builder()
+                        .name(invoice.getClient().getName())
+                        .documentType(invoice.getClient().getDocumentType())
+                        .mail(invoice.getClient().getEmail())
+                        .phone(String.valueOf(invoice.getClient().getPhoneNumber()))
+                        .build())
+                .employee(EmployeeResponse.builder()
+                        .id(invoice.getEmployee().getId())
+                        .name(invoice.getEmployee().getName())
+                        .build())
+                .itemList(invoice.getItemList()
+                        .stream()
+                        .map(item -> ItemResponse.builder()
+                                .quantity(item.getQuantity())
+                                .productResponse(ProductResponse.builder()
+                                        .name(item.getProduct().getName())
+                                        .price(item.getProduct().getPrice())
+                                        .size(item.getProduct().getSize())
+                                        .color(item.getProduct().getColor())
+                                        .build())
+                                .build())
+                        .toList())
+                .date(invoice.getDate())
+                .totalPurchases(invoice.getTotalPurchases())
+                .build();
     }
 
     private Invoice requestToInvoice(InvoiceRequest request, Invoice entity){
@@ -113,5 +124,7 @@ public class InvoiceService implements IInvoiceService {
         return this.invoiceRepository.findById(id)
                 .orElseThrow(() -> new IdNotFoundExeption("Invoice"));
     }
+
+
 
 }

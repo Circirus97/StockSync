@@ -81,7 +81,6 @@ public class EmployeeService implements IEmployeeService {
         return response;
     }
 
-
     private Employee requestToEmployee(EmployeeRequest request, Employee entity){
         entity.setName(request.getName());
         entity.setIdentity(request.getIdentity());
@@ -90,7 +89,6 @@ public class EmployeeService implements IEmployeeService {
         return entity;
 
     }
-
     private Employee find(String id){
         return this.employeeRepository.findById(id).orElseThrow(()-> new IdNotFoundExeption("employee"));
     }
@@ -101,7 +99,6 @@ public class EmployeeService implements IEmployeeService {
         employee.setContact(entity.getContact());
         
         return employee;
-
 
     }
     

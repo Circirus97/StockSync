@@ -13,5 +13,7 @@ import lombok.NoArgsConstructor;
 public class ItemResponse {
 
     private String id;
-    private int quantity;  
+    private int quantity;
+    private ProductResponse productResponse;
+
 }
