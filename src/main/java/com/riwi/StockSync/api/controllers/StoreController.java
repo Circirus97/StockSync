@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -37,7 +38,7 @@ public class StoreController {
 
     @PostMapping
     public ResponseEntity<StoreToEmployeeResponse> create(
-        
+        @Validated
         @RequestBody StoreRequest store
     ){
         return ResponseEntity.ok(this.storeService.create(store));
@@ -56,6 +57,7 @@ public class StoreController {
 
     public ResponseEntity<StoreToEmployeeResponse> update(
         @PathVariable String id,
+        @Validated
         @RequestBody StoreRequest store
     ){
         return ResponseEntity.ok(this.storeService.update(store, id));
