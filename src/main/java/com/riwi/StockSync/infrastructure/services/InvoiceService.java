@@ -87,7 +87,8 @@ public class InvoiceService implements IInvoiceService {
                 .client(ClientResponse.builder()
                         .name(invoice.getClient().getName())
                         .documentType(invoice.getClient().getDocumentType())
-                        .mail(invoice.getClient().getEmail())
+                        
+                        .email(invoice.getClient().getEmail())
                         .phone(String.valueOf(invoice.getClient().getPhoneNumber()))
                         .build())
                 .employee(EmployeeResponse.builder()

@@ -1,5 +1,6 @@
 package com.riwi.StockSync.infrastructure.services;
 
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
@@ -15,6 +16,7 @@ import com.riwi.StockSync.domain.entities.Clients;
 import com.riwi.StockSync.domain.entities.Invoice;
 import com.riwi.StockSync.domain.repositories.ClientRepository;
 import com.riwi.StockSync.infrastructure.services.interfaces.IClientService;
+import com.riwi.StockSync.util.exceptions.IdNotFoundExeption;
 
 import lombok.AllArgsConstructor;
 
@@ -41,22 +43,32 @@ public class ClientService implements IClientService {
 
     @Override
     public ClientToInvoiceResponse create(ClientRequest request) {
-        throw new UnsupportedOperationException("Unimplemented method 'create'");
+
+        Clients clients = this.requestToEntity(request,new Clients());
+
+        return this.entityToResponse(this.clientRepository.save(clients));
     }
 
     @Override
     public ClientToInvoiceResponse update(ClientRequest request, String id) {
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        Clients clientToChange = this.find(id);
+        
+        Clients client = this.requestToEntity(request, clientToChange);
+        
+        return this.entityToResponse(this.clientRepository.save(client));
+
     }
 
     @Override
     public void delete(String id) {
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        Clients clients = this.find(id);
+        this.clientRepository.delete(clients);
     }
 
     @Override
     public ClientToInvoiceResponse getById(String id) {
-        throw new UnsupportedOperationException("Unimplemented method 'getById'");
+        Clients client = this.find(id);
+        return this.entityToResponse(client);
     }
 
     
@@ -76,5 +88,16 @@ public class ClientService implements IClientService {
         BeanUtils.copyProperties(invoice, response);
 
         return response;
+    }
+
+    private Clients requestToEntity(ClientRequest request, Clients clients){
+
+        BeanUtils.copyProperties(request, clients);
+        clients.setInvoices(new ArrayList<>());
+        return clients;
+    }
+
+    private Clients find(String id){
+        return this.clientRepository.findById(id).orElseThrow(()-> new IdNotFoundExeption("client"));
     }
 }

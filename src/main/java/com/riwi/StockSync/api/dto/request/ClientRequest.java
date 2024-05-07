@@ -13,10 +13,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ClientRequest {
     
-    private String id;
     private String name;
-    private String mail;
+    private String email;
     private String phone;
     private DocumentType documentType;
+    private int documentNumber;
 }
 

@@ -33,6 +33,9 @@ public class Clients{
     @Enumerated(EnumType.STRING)
     private DocumentType documentType;
 
+    @Column(length = 11, nullable = false)
+    private int documentNumber;
+
     @OneToMany(mappedBy = "client",fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = false)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
