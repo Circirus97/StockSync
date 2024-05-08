@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ItemResponse {
 
-    private String id;
     private int quantity;
     private ProductResponse productResponse;
 

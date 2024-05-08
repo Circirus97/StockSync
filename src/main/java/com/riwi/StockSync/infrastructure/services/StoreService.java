@@ -1,8 +1,8 @@
 package com.riwi.StockSync.infrastructure.services;
 
 import com.riwi.StockSync.api.dto.request.StoreRequest;
-import com.riwi.StockSync.api.dto.response.EmployeeResponse;
-import com.riwi.StockSync.api.dto.response.StoreToEmployeeResponse;
+import com.riwi.StockSync.api.dto.response.EmployeeToStoreResponse;
+import com.riwi.StockSync.api.dto.response.StoreResponse;
 import com.riwi.StockSync.domain.entities.Employee;
 import com.riwi.StockSync.domain.entities.Store;
 import com.riwi.StockSync.domain.repositories.StoreRepository;
@@ -27,7 +27,7 @@ public class StoreService implements IStoreService {
     private final StoreRepository storeRepository;
 
     @Override
-    public Page<StoreToEmployeeResponse> getAll(int page, int size) {
+    public Page<StoreResponse> getAll(int page, int size) {
         if(page<0)
         page = 0;
        PageRequest pagination = PageRequest.of(page, size);
@@ -36,13 +36,13 @@ public class StoreService implements IStoreService {
     }
 
     @Override
-    public StoreToEmployeeResponse create(StoreRequest request) {
+    public StoreResponse create(StoreRequest request) {
         Store store = this.requestToEntity(request, new Store());
         return this.entityToResponse(this.storeRepository.save(store));
     }
 
     @Override
-    public StoreToEmployeeResponse update(StoreRequest request, String id) {
+    public StoreResponse update(StoreRequest request, String id) {
         Store storeToUpdate = this.find(id);
 
         Store store =this.requestToEntity(request, storeToUpdate);
@@ -56,22 +56,22 @@ public class StoreService implements IStoreService {
     }
 
     @Override
-    public StoreToEmployeeResponse getById(String id) {
+    public StoreResponse getById(String id) {
         Store store = this.find(id);
         return this.entityToResponse(store);
     }
 
 
 
-    private StoreToEmployeeResponse entityToResponse(Store entity){
-        StoreToEmployeeResponse response = new StoreToEmployeeResponse();
+    private StoreResponse entityToResponse(Store entity){
+        StoreResponse response = new StoreResponse();
         BeanUtils.copyProperties(entity, response);
          response.setEmployees(entity.getEmployee().stream().map(employee-> this.employeeToResponse(employee)).collect(Collectors.toList()));
         return response;
     }
 
-    private EmployeeResponse employeeToResponse(Employee entity){
-        EmployeeResponse response = new EmployeeResponse();
+    private EmployeeToStoreResponse employeeToResponse(Employee entity){
+        EmployeeToStoreResponse response = new EmployeeToStoreResponse();
 
         BeanUtils.copyProperties(entity, response);
 
