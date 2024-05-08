@@ -1,7 +1,7 @@
 package com.riwi.StockSync.api.controllers;
 
 import com.riwi.StockSync.api.dto.request.StoreRequest;
-import com.riwi.StockSync.api.dto.response.StoreToEmployeeResponse;
+import com.riwi.StockSync.api.dto.response.StoreResponse;
 import com.riwi.StockSync.infrastructure.services.interfaces.IStoreService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class StoreController {
 
     @GetMapping
     // como es paginacion recibe 2 parametros pagina y size, con los requestparam lo que digo al programa es que si no me dan los valores los pase por defecto
-    public ResponseEntity<Page<StoreToEmployeeResponse>> getAll(
+    public ResponseEntity<Page<StoreResponse>> getAll(
         @RequestParam(defaultValue = "1") int page,
         @RequestParam(defaultValue = "3") int size){
             return ResponseEntity.ok(this.storeService.getAll(page-1, size));
@@ -29,7 +29,7 @@ public class StoreController {
     }
 
     @GetMapping(path="/{id}")
-    public ResponseEntity<StoreToEmployeeResponse> get(
+    public ResponseEntity<StoreResponse> get(
         @PathVariable String id
     ){
         return ResponseEntity.ok(this.storeService.getById(id));
@@ -37,7 +37,7 @@ public class StoreController {
 
 
     @PostMapping
-    public ResponseEntity<StoreToEmployeeResponse> create(
+    public ResponseEntity<StoreResponse> create(
         @Validated
         @RequestBody StoreRequest store
     ){
@@ -55,7 +55,7 @@ public class StoreController {
 
    @PutMapping(path="/{id}")
 
-    public ResponseEntity<StoreToEmployeeResponse> update(
+    public ResponseEntity<StoreResponse> update(
         @PathVariable String id,
         @Validated
         @RequestBody StoreRequest store

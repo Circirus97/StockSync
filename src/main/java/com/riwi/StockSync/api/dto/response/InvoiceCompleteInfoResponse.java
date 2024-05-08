@@ -21,11 +21,11 @@ public class InvoiceCompleteInfoResponse {
 
     private Double totalPurchases;
 
-    private StoreResponse store;
+    private StoreToInvoiceResponse store;
 
-    private EmployeeResponse employee;
+    private EmployeeToStoreResponse employee;
 
-    private ClientResponse client;
+    private InvoiceToClientResponse client;
 
     private List<ItemResponse> itemList;
 

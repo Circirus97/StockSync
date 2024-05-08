@@ -1,7 +1,7 @@
 package com.riwi.StockSync.api.controllers;
 
 import com.riwi.StockSync.api.dto.request.EmployeeRequest;
-import com.riwi.StockSync.api.dto.response.EmployeeToStoreResponse;
+import com.riwi.StockSync.api.dto.response.EmployeeResponse;
 import com.riwi.StockSync.infrastructure.services.interfaces.IEmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class EmployeeController {
 
     @GetMapping
     // como es paginacion recibe 2 parametros pagina y size, con los requestparam lo que digo al programa es que si no me dan los valores los pase por defecto
-    public ResponseEntity<Page<EmployeeToStoreResponse>> getAll(
+    public ResponseEntity<Page<EmployeeResponse>> getAll(
         @RequestParam(defaultValue = "1") int page,
         @RequestParam(defaultValue = "3") int size){
             return ResponseEntity.ok(this.employeeService.getAll(page-1, size));
@@ -27,7 +27,7 @@ public class EmployeeController {
     }
 
     @GetMapping(path = "/{id}")
-     public ResponseEntity<EmployeeToStoreResponse>get(
+     public ResponseEntity<EmployeeResponse>get(
         @PathVariable String id
     ){
         return ResponseEntity.ok(this.employeeService.getById(id));
@@ -35,7 +35,7 @@ public class EmployeeController {
 
 
     @PostMapping
-    public ResponseEntity <EmployeeToStoreResponse> insert(
+    public ResponseEntity <EmployeeResponse> insert(
     
         @RequestBody EmployeeRequest employee
     ){
@@ -53,7 +53,7 @@ public class EmployeeController {
 
 
      @PutMapping(path="/{id}")
-    public ResponseEntity<EmployeeToStoreResponse> update(
+    public ResponseEntity<EmployeeResponse> update(
 
         @PathVariable String id,
         @RequestBody EmployeeRequest employee
