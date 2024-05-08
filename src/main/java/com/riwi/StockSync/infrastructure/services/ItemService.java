@@ -5,11 +5,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import com.riwi.StockSync.api.dto.response.ItemResponse;
+import com.riwi.StockSync.api.dto.request.ItemRequest;
 import com.riwi.StockSync.api.dto.response.ItemResponseCompleteInformation;
+import com.riwi.StockSync.domain.entities.Invoice;
 import com.riwi.StockSync.domain.entities.Item;
+import com.riwi.StockSync.domain.entities.Product;
+import com.riwi.StockSync.domain.repositories.InvoiceRepository;
 import com.riwi.StockSync.domain.repositories.ItemRepository;
+import com.riwi.StockSync.domain.repositories.ProductRepository;
 import com.riwi.StockSync.infrastructure.services.interfaces.IItemService;
+import com.riwi.StockSync.util.exceptions.IdNotFoundExeption;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,6 +23,8 @@ import lombok.RequiredArgsConstructor;
 public class ItemService implements IItemService{
 
     private final ItemRepository itemRepository;
+    private final ProductRepository productRepository;
+    private final InvoiceRepository invoiceRepository;
 
     @Override
     public Page<ItemResponseCompleteInformation> getAll(int page, int size) {
@@ -30,12 +37,22 @@ public class ItemService implements IItemService{
     }
 
     @Override
-    public ItemResponseCompleteInformation create(ItemResponse request) {
-        throw new UnsupportedOperationException("Unimplemented method 'create'");
+    public ItemResponseCompleteInformation create(ItemRequest request) {
+        Product product = this.productRepository.findById(request
+        .getProduct_id()).orElseThrow(() -> new IdNotFoundExeption("Product"));
+
+        Invoice invoice = this.invoiceRepository.findById(request
+        .getInvoice_id()).orElseThrow(()-> new IdNotFoundExeption("Invoice"));
+
+        Item item = this.requestToItem(request, new Item());
+        item.setInvoice(invoice);
+        item.setProduct(product);
+
+        return this.entityToResponse(this.itemRepository.save(item));
     }
 
     @Override
-    public ItemResponseCompleteInformation update(ItemResponse request, String id) {
+    public ItemResponseCompleteInformation update(ItemRequest request, String id) {
         throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 
@@ -46,7 +63,7 @@ public class ItemService implements IItemService{
 
     @Override
     public ItemResponseCompleteInformation getById(String id) {
-        throw new UnsupportedOperationException("Unimplemented method 'getById'");
+        return this.entityToResponse(this.find(id));
     }
 
     private ItemResponseCompleteInformation entityToResponse(Item item){
@@ -57,5 +74,14 @@ public class ItemService implements IItemService{
         response.setProduct(item.getProduct());
 
         return response;
+    }
+
+    private Item find(String id){
+        return this.itemRepository.findById(id).orElseThrow(() -> new IdNotFoundExeption("Items"));
+    }
+
+    private Item requestToItem(ItemRequest request, Item item){
+        BeanUtils.copyProperties(request, item);
+        return item;
     }
 }
