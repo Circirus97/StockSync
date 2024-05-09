@@ -35,6 +35,11 @@ public class ItemController {
                 return ResponseEntity.ok(this.iItemService.getAll(page,size));
     }
 
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<ItemResponseCompleteInformation> getById(@PathVariable String id){
+        return ResponseEntity.ok(this.iItemService.getById(id));
+    }
+
     @PostMapping
     public ResponseEntity<ItemResponseCompleteInformation> create(@RequestBody ItemRequest entity) {
         
