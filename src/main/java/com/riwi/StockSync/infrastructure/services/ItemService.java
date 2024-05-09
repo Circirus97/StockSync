@@ -53,12 +53,27 @@ public class ItemService implements IItemService{
 
     @Override
     public ItemResponseCompleteInformation update(ItemRequest request, String id) {
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        
+        Item item = this.find(id);
+
+        Product product = this.productRepository.findById(request
+        .getProduct_id()).orElseThrow(() -> new IdNotFoundExeption("Product"));
+
+        Invoice invoice = this.invoiceRepository.findById(request
+        .getInvoice_id()).orElseThrow(()-> new IdNotFoundExeption("Invoice"));
+
+        item =  this.requestToItem(request, item);
+
+        item.setInvoice(invoice);
+        item.setProduct(product);
+
+        return this.entityToResponse(this.itemRepository.save(item));
     }
 
     @Override
     public void delete(String id) {
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        Item item = this.find(id);
+        this.itemRepository.delete(item);
     }
 
     @Override
