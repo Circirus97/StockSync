@@ -23,7 +23,7 @@ public class InvoiceCompleteInfoResponse {
 
     private StoreToInvoiceResponse store;
 
-    private EmployeeToStoreResponse employee;
+    private EmployeeResponse employee;
 
     private InvoiceToClientResponse client;
 

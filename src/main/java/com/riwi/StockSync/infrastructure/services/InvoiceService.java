@@ -102,7 +102,7 @@ public class InvoiceService implements IInvoiceService {
                         .email(invoice.getClient().getEmail())
                         .phone(String.valueOf(invoice.getClient().getPhoneNumber()))
                         .build())
-                .employee(EmployeeToStoreResponse.builder()
+                .employee(EmployeeResponse.builder()
                         .id(invoice.getEmployee().getId())
                         .name(invoice.getEmployee().getName())
                         .build())
