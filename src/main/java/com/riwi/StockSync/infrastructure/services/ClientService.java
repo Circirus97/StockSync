@@ -15,7 +15,7 @@ import com.riwi.StockSync.api.dto.response.InvoiceResponse;
 import com.riwi.StockSync.domain.entities.Clients;
 import com.riwi.StockSync.domain.entities.Invoice;
 import com.riwi.StockSync.domain.repositories.ClientRepository;
-import com.riwi.StockSync.infrastructure.services.interfaces.IClientService;
+import com.riwi.StockSync.infrastructure.abstract_services.IClientService;
 import com.riwi.StockSync.util.exceptions.BadRequestExeption;
 
 import lombok.AllArgsConstructor;

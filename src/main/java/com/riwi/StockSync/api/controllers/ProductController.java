@@ -3,7 +3,7 @@ package com.riwi.StockSync.api.controllers;
 
 import com.riwi.StockSync.api.dto.request.ProductRequest;
 import com.riwi.StockSync.api.dto.response.ProductToInventaryResponse;
-import com.riwi.StockSync.infrastructure.services.interfaces.IProductService;
+import com.riwi.StockSync.infrastructure.abstract_services.IProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

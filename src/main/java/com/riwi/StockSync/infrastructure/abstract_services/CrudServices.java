@@ -1,4 +1,4 @@
-package com.riwi.StockSync.infrastructure.services.interfaces;
+package com.riwi.StockSync.infrastructure.abstract_services;
 
 import org.springframework.data.domain.Page;
 
