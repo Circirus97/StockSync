@@ -8,7 +8,7 @@ import com.riwi.StockSync.domain.entities.Employee;
 import com.riwi.StockSync.domain.entities.Store;
 import com.riwi.StockSync.domain.repositories.EmployeeRepository;
 import com.riwi.StockSync.domain.repositories.StoreRepository;
-import com.riwi.StockSync.infrastructure.services.interfaces.IEmployeeService;
+import com.riwi.StockSync.infrastructure.abstract_services.IEmployeeService;
 import com.riwi.StockSync.util.exceptions.BadRequestExeption;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;

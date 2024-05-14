@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.riwi.StockSync.api.dto.request.ClientRequest;
 import com.riwi.StockSync.api.dto.response.ClientToInvoiceResponse;
-import com.riwi.StockSync.infrastructure.services.interfaces.IClientService;
+import com.riwi.StockSync.infrastructure.abstract_services.IClientService;
 
 import lombok.RequiredArgsConstructor;
 

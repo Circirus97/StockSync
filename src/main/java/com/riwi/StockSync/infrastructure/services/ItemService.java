@@ -13,7 +13,7 @@ import com.riwi.StockSync.domain.entities.Product;
 import com.riwi.StockSync.domain.repositories.InvoiceRepository;
 import com.riwi.StockSync.domain.repositories.ItemRepository;
 import com.riwi.StockSync.domain.repositories.ProductRepository;
-import com.riwi.StockSync.infrastructure.services.interfaces.IItemService;
+import com.riwi.StockSync.infrastructure.abstract_services.IItemService;
 import com.riwi.StockSync.util.exceptions.IdNotFoundExeption;
 
 import lombok.RequiredArgsConstructor;

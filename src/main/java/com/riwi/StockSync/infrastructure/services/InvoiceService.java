@@ -4,7 +4,7 @@ import com.riwi.StockSync.api.dto.request.InvoiceRequest;
 import com.riwi.StockSync.api.dto.response.*;
 import com.riwi.StockSync.domain.entities.*;
 import com.riwi.StockSync.domain.repositories.*;
-import com.riwi.StockSync.infrastructure.services.interfaces.IInvoiceService;
+import com.riwi.StockSync.infrastructure.abstract_services.IInvoiceService;
 import com.riwi.StockSync.util.exceptions.BadRequestExeption;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

@@ -2,7 +2,7 @@ package com.riwi.StockSync.api.controllers;
 
 import com.riwi.StockSync.api.dto.request.InvoiceRequest;
 import com.riwi.StockSync.api.dto.response.InvoiceCompleteInfoResponse;
-import com.riwi.StockSync.infrastructure.services.interfaces.IInvoiceService;
+import com.riwi.StockSync.infrastructure.abstract_services.IInvoiceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;

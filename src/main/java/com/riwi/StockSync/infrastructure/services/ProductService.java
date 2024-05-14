@@ -12,7 +12,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import com.riwi.StockSync.api.dto.response.ProductToInventaryResponse;
-import com.riwi.StockSync.infrastructure.services.interfaces.IProductService;
+import com.riwi.StockSync.infrastructure.abstract_services.IProductService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 

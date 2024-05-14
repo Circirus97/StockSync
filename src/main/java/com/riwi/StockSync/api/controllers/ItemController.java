@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.riwi.StockSync.api.dto.request.ItemRequest;
 import com.riwi.StockSync.api.dto.response.ItemResponseCompleteInformation;
-import com.riwi.StockSync.infrastructure.services.interfaces.IItemService;
+import com.riwi.StockSync.infrastructure.abstract_services.IItemService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
