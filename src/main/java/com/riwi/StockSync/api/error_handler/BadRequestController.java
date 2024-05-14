@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.riwi.StockSync.api.dto.errors.BaseErrorResponse;
 import com.riwi.StockSync.api.dto.errors.ErrorResponse;
+import com.riwi.StockSync.util.exceptions.BadRequestExeption;
 
 @RestControllerAdvice
 @ResponseStatus(code = HttpStatus.BAD_REQUEST)
@@ -27,6 +28,19 @@ public class BadRequestController {
         .errors(errors)
         .build();
 
+    }
+
+    @ExceptionHandler(BadRequestExeption.class)
+    //esta es una exeption creada por nosotros 
+    public BaseErrorResponse badRequest (BadRequestExeption exeption){
+        List<String> errors = new ArrayList<String>();
+        errors.add(exeption.getMessage());
+
+        return ErrorResponse.builder()
+        .code(HttpStatus.BAD_REQUEST.value())
+        .status(HttpStatus.BAD_REQUEST.name())
+        .errors(errors)
+        .build();
     }
     
 }

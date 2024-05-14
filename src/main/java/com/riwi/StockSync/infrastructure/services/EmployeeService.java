@@ -9,7 +9,7 @@ import com.riwi.StockSync.domain.entities.Store;
 import com.riwi.StockSync.domain.repositories.EmployeeRepository;
 import com.riwi.StockSync.domain.repositories.StoreRepository;
 import com.riwi.StockSync.infrastructure.services.interfaces.IEmployeeService;
-import com.riwi.StockSync.util.exceptions.IdNotFoundExeption;
+import com.riwi.StockSync.util.exceptions.BadRequestExeption;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ public class EmployeeService implements IEmployeeService {
     @Override
     public EmployeeToStoreResponse create(EmployeeRequest request) {
         /*convertimos la compañia que corresponde con el id que esta dentro del request */
-        Store store = this.storeRepository.findById(request.getStoreId()).orElseThrow(()-> new IdNotFoundExeption("store"));
+        Store store = this.storeRepository.findById(request.getStoreId()).orElseThrow(()-> new BadRequestExeption("store"));
 
         /*Guardamos en la DB y convertimos la nueva entidad al Dto de respuesta */
         Employee employee = this.requestToEmployee(request, new Employee());
@@ -90,7 +90,7 @@ public class EmployeeService implements IEmployeeService {
 
     }
     private Employee find(String id){
-        return this.employeeRepository.findById(id).orElseThrow(()-> new IdNotFoundExeption("employee"));
+        return this.employeeRepository.findById(id).orElseThrow(()-> new BadRequestExeption("employee"));
     }
 
     private Employee requestToEntity(EmployeeRequest entity, Employee employee){

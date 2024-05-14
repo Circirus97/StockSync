@@ -8,7 +8,7 @@ import com.riwi.StockSync.domain.repositories.EmployeeRepository;
 import com.riwi.StockSync.domain.repositories.InvoiceRepository;
 import com.riwi.StockSync.domain.repositories.StoreRepository;
 import com.riwi.StockSync.infrastructure.services.interfaces.IInvoiceService;
-import com.riwi.StockSync.util.exceptions.IdNotFoundExeption;
+import com.riwi.StockSync.util.exceptions.BadRequestExeption;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
@@ -41,7 +41,7 @@ public class InvoiceService implements IInvoiceService {
     @Override
     public InvoiceCompleteInfoResponse create(InvoiceRequest request) {
         Store store = this.storeRepository.findById(request.getStoreId())
-                .orElseThrow(()-> new IdNotFoundExeption("Store"));
+                .orElseThrow(()-> new BadRequestExeption("Store"));
 
         Invoice invoice = this.requestToInvoice(request, new Invoice());
 
@@ -55,7 +55,7 @@ public class InvoiceService implements IInvoiceService {
         Invoice invoice = this.find(id);
 
         Store store = this.storeRepository.findById(request.getStoreId())
-                .orElseThrow(()-> new IdNotFoundExeption("Store"));
+                .orElseThrow(()-> new BadRequestExeption("Store"));
 
         invoice = this.requestToInvoice(request, invoice);
 
@@ -123,7 +123,7 @@ public class InvoiceService implements IInvoiceService {
 
     private Invoice find(String id){
         return this.invoiceRepository.findById(id)
-                .orElseThrow(() -> new IdNotFoundExeption("Invoice"));
+                .orElseThrow(() -> new BadRequestExeption("Invoice"));
     }
 
 

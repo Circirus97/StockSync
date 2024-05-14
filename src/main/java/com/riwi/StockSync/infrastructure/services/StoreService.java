@@ -7,7 +7,7 @@ import com.riwi.StockSync.domain.entities.Employee;
 import com.riwi.StockSync.domain.entities.Store;
 import com.riwi.StockSync.domain.repositories.StoreRepository;
 import com.riwi.StockSync.infrastructure.services.interfaces.IStoreService;
-import com.riwi.StockSync.util.exceptions.IdNotFoundExeption;
+import com.riwi.StockSync.util.exceptions.BadRequestExeption;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,7 +88,7 @@ public class StoreService implements IStoreService {
     }
 
     private Store find(String id){
-        return this.storeRepository.findById(id).orElseThrow(()-> new IdNotFoundExeption("store"));
+        return this.storeRepository.findById(id).orElseThrow(()-> new BadRequestExeption("store"));
     }
     
 }

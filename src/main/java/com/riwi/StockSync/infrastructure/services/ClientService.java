@@ -16,7 +16,7 @@ import com.riwi.StockSync.domain.entities.Clients;
 import com.riwi.StockSync.domain.entities.Invoice;
 import com.riwi.StockSync.domain.repositories.ClientRepository;
 import com.riwi.StockSync.infrastructure.services.interfaces.IClientService;
-import com.riwi.StockSync.util.exceptions.IdNotFoundExeption;
+import com.riwi.StockSync.util.exceptions.BadRequestExeption;
 
 import lombok.AllArgsConstructor;
 
@@ -98,6 +98,6 @@ public class ClientService implements IClientService {
     }
 
     private Clients find(String id){
-        return this.clientRepository.findById(id).orElseThrow(()-> new IdNotFoundExeption("client"));
+        return this.clientRepository.findById(id).orElseThrow(()-> new BadRequestExeption("client"));
     }
 }
