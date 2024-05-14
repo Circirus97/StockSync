@@ -1,7 +1,7 @@
 Requerimientos 
  
 Nombre del Proyecto: StockSync
-Realizado por: Sara Ruiz, Valeria Henao, Maria Alejandra Ramirez, 
+Realizado por: Sara Ruiz, Valeria Henao, Maria Alejandra Ramirez del clan Meta y Juan Pablo Sanabria y Cristian Franco de Van Rouser
 Miguel Angel Espinal
 Categoría: E-commerce de productos y servicios
 
