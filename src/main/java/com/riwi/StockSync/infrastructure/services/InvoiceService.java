@@ -5,7 +5,7 @@ import com.riwi.StockSync.api.dto.response.*;
 import com.riwi.StockSync.domain.entities.*;
 import com.riwi.StockSync.domain.repositories.*;
 import com.riwi.StockSync.infrastructure.services.interfaces.IInvoiceService;
-import com.riwi.StockSync.util.exceptions.IdNotFoundExeption;
+import com.riwi.StockSync.util.exceptions.BadRequestExeption;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -38,13 +38,13 @@ public class InvoiceService implements IInvoiceService {
     public InvoiceCompleteInfoResponse create(InvoiceRequest request) {
 
         Store store = this.storeRepository.findById(request.getStoreId())
-                .orElseThrow(()-> new IdNotFoundExeption("Store"));
+                .orElseThrow(()-> new BadRequestExeption("Store"));
 
         Employee employee = this.employeeRepository.findById(request.getEmployeeId())
-                .orElseThrow(()-> new IdNotFoundExeption("employee"));
+                .orElseThrow(()-> new BadRequestExeption("employee"));
 
         Clients client = this.clientRepository.findById(request.getClientId())
-                .orElseThrow(()-> new IdNotFoundExeption("client"));
+                .orElseThrow(()-> new BadRequestExeption("client"));
 
         List<Item> itemList = request.getItemList().stream()
                 .map(itemRequest ->  this.productRepository.findById(itemRequest.getProduct_id())
@@ -52,7 +52,7 @@ public class InvoiceService implements IInvoiceService {
                                 .product(product)
                                 .quantity(itemRequest.getQuantity())
                                 .build())
-                        .orElseThrow(()-> new IdNotFoundExeption("product")))
+                        .orElseThrow(()-> new BadRequestExeption("product")))
                 .toList();
 
         Invoice invoice = this.requestToInvoice(request, new Invoice());
@@ -134,7 +134,7 @@ public class InvoiceService implements IInvoiceService {
 
     private Invoice find(String id){
         return this.invoiceRepository.findById(id)
-                .orElseThrow(() -> new IdNotFoundExeption("Invoice"));
+                .orElseThrow(() -> new BadRequestExeption("Invoice"));
     }
 
 
