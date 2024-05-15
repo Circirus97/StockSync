@@ -17,9 +17,10 @@ import lombok.NoArgsConstructor;
 public class StoreRequest {
 
     private String id;
-    @Size(min = 0, max =40, message = "the name must have a maximum of 40 characters")
+    @Size(min = 0, max =40, message = ErrorMessage.MaxCharacters40)
     @NotBlank(message = ErrorMessage.RequiredName)
     private String name;
+    @NotBlank (message = ErrorMessage.RequiredLocation)
     private String location;
     
 }
