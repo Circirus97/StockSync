@@ -6,7 +6,7 @@ import com.riwi.StockSync.domain.entities.Inventary;
 import com.riwi.StockSync.domain.entities.Product;
 import com.riwi.StockSync.domain.repositories.InventaryRepository;
 import com.riwi.StockSync.domain.repositories.ProductRepository;
-import com.riwi.StockSync.util.exceptions.IdNotFoundExeption;
+import com.riwi.StockSync.util.exceptions.BadRequestExeption;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,7 @@ public class ProductService implements IProductService {
     @Override
     public ProductToInventaryResponse create(com.riwi.StockSync.api.dto.request.ProductRequest request) {
 
-        Inventary inventary = this.inventaryRepository.findById(request.getInventaryId()).orElseThrow(() -> new IdNotFoundExeption("inventary"));
+        Inventary inventary = this.inventaryRepository.findById(request.getInventaryId()).orElseThrow(() -> new BadRequestExeption("inventary"));
 
         Product product = this.requestToProduct(request, new Product());
         product.setInventary(inventary);
@@ -98,7 +98,7 @@ public class ProductService implements IProductService {
     }
 
     private Product find(String id) {
-        return this.productRepository.findById(id).orElseThrow(() -> new IdNotFoundExeption("product"));
+        return this.productRepository.findById(id).orElseThrow(() -> new BadRequestExeption("product"));
     }
 
 }
