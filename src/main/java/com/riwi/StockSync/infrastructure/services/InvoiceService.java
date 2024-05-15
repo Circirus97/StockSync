@@ -2,22 +2,17 @@ package com.riwi.StockSync.infrastructure.services;
 
 import com.riwi.StockSync.api.dto.request.InvoiceRequest;
 import com.riwi.StockSync.api.dto.response.*;
-import com.riwi.StockSync.domain.entities.Invoice;
-import com.riwi.StockSync.domain.entities.Store;
-import com.riwi.StockSync.domain.repositories.EmployeeRepository;
-import com.riwi.StockSync.domain.repositories.InvoiceRepository;
-import com.riwi.StockSync.domain.repositories.StoreRepository;
-import com.riwi.StockSync.infrastructure.services.interfaces.IInvoiceService;
+import com.riwi.StockSync.domain.entities.*;
+import com.riwi.StockSync.domain.repositories.*;
+import com.riwi.StockSync.infrastructure.abstract_services.IInvoiceService;
 import com.riwi.StockSync.util.exceptions.BadRequestExeption;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -26,8 +21,9 @@ public class InvoiceService implements IInvoiceService {
     private final InvoiceRepository invoiceRepository;
     private final EmployeeRepository employeeRepository;
     private final StoreRepository storeRepository;
-/*    private final ClientRepository clientRepository;
-    private final ItemRepository ItemRepository;*/
+    private final ClientRepository clientRepository;
+    private final ProductRepository productRepository;
+
 
     @Override
     public Page<InvoiceCompleteInfoResponse> getAll(int page, int size) {
@@ -40,26 +36,41 @@ public class InvoiceService implements IInvoiceService {
 
     @Override
     public InvoiceCompleteInfoResponse create(InvoiceRequest request) {
+
         Store store = this.storeRepository.findById(request.getStoreId())
                 .orElseThrow(()-> new BadRequestExeption("Store"));
+
+        Employee employee = this.employeeRepository.findById(request.getEmployeeId())
+                .orElseThrow(()-> new BadRequestExeption("employee"));
+
+        Clients client = this.clientRepository.findById(request.getClientId())
+                .orElseThrow(()-> new BadRequestExeption("client"));
+
+        List<Item> itemList = request.getItemList().stream()
+                .map(itemRequest ->  this.productRepository.findById(itemRequest.getProduct_id())
+                        .map(product -> Item.builder()
+                                .product(product)
+                                .quantity(itemRequest.getQuantity())
+                                .build())
+                        .orElseThrow(()-> new BadRequestExeption("product")))
+                .toList();
 
         Invoice invoice = this.requestToInvoice(request, new Invoice());
 
         invoice.setStore(store);
+        invoice.setEmployee(employee);
+        invoice.setClient(client);
+        invoice.setItemList(itemList);
 
         return this.entityToResponse(this.invoiceRepository.save(invoice));
     }
 
     @Override
     public InvoiceCompleteInfoResponse update(InvoiceRequest request, String id) {
+
         Invoice invoice = this.find(id);
 
-        Store store = this.storeRepository.findById(request.getStoreId())
-                .orElseThrow(()-> new BadRequestExeption("Store"));
-
         invoice = this.requestToInvoice(request, invoice);
-
-        invoice.setStore(store);
 
         return this.entityToResponse(this.invoiceRepository.save(invoice));
 
@@ -80,14 +91,14 @@ public class InvoiceService implements IInvoiceService {
 
     private InvoiceCompleteInfoResponse entityToResponse(Invoice invoice) {
         return  InvoiceCompleteInfoResponse.builder()
-                .store(StoreResponse.builder()
+                .id(invoice.getId())
+                .store(StoreToInvoiceResponse.builder()
                         .name(invoice.getStore().getName())
                         .location(invoice.getStore().getLocation())
                         .build())
-                .client(ClientResponse.builder()
+                .client(InvoiceToClientResponse.builder()
                         .name(invoice.getClient().getName())
                         .documentType(invoice.getClient().getDocumentType())
-                        
                         .email(invoice.getClient().getEmail())
                         .phone(String.valueOf(invoice.getClient().getPhoneNumber()))
                         .build())

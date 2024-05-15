@@ -2,7 +2,7 @@ package com.riwi.StockSync.api.controllers;
 
 import com.riwi.StockSync.api.dto.request.StoreRequest;
 import com.riwi.StockSync.api.dto.response.StoreToEmployeeResponse;
-import com.riwi.StockSync.infrastructure.services.interfaces.IStoreService;
+import com.riwi.StockSync.infrastructure.abstract_services.IStoreService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
