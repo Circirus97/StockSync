@@ -14,7 +14,7 @@ import com.riwi.StockSync.domain.repositories.InvoiceRepository;
 import com.riwi.StockSync.domain.repositories.ItemRepository;
 import com.riwi.StockSync.domain.repositories.ProductRepository;
 import com.riwi.StockSync.infrastructure.abstract_services.IItemService;
-import com.riwi.StockSync.util.exceptions.IdNotFoundExeption;
+import com.riwi.StockSync.util.exceptions.BadRequestExeption;
 
 import lombok.RequiredArgsConstructor;
 
@@ -39,10 +39,10 @@ public class ItemService implements IItemService{
     @Override
     public ItemResponseCompleteInformation create(ItemRequest request) {
         Product product = this.productRepository.findById(request
-        .getProduct_id()).orElseThrow(() -> new IdNotFoundExeption("Product"));
+        .getProduct_id()).orElseThrow(() -> new BadRequestExeption("Product"));
 
         Invoice invoice = this.invoiceRepository.findById(request
-        .getInvoice_id()).orElseThrow(()-> new IdNotFoundExeption("Invoice"));
+        .getInvoice_id()).orElseThrow(()-> new BadRequestExeption("Invoice"));
 
         Item item = this.requestToItem(request, new Item());
         item.setInvoice(invoice);
@@ -57,10 +57,10 @@ public class ItemService implements IItemService{
         Item item = this.find(id);
 
         Product product = this.productRepository.findById(request
-        .getProduct_id()).orElseThrow(() -> new IdNotFoundExeption("Product"));
+        .getProduct_id()).orElseThrow(() -> new BadRequestExeption("Product"));
 
         Invoice invoice = this.invoiceRepository.findById(request
-        .getInvoice_id()).orElseThrow(()-> new IdNotFoundExeption("Invoice"));
+        .getInvoice_id()).orElseThrow(()-> new BadRequestExeption("Invoice"));
 
         item =  this.requestToItem(request, item);
 
@@ -92,7 +92,7 @@ public class ItemService implements IItemService{
     }
 
     private Item find(String id){
-        return this.itemRepository.findById(id).orElseThrow(() -> new IdNotFoundExeption("Items"));
+        return this.itemRepository.findById(id).orElseThrow(() -> new BadRequestExeption("Items"));
     }
 
     private Item requestToItem(ItemRequest request, Item item){
