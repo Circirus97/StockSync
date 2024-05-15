@@ -8,6 +8,10 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.util.List;
 
+
+
+import jakarta.validation.constraints.NotNull;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -15,11 +19,11 @@ import java.util.List;
 public class InvoiceRequest {
 
     private String id;
-
+    
     private LocalDate date;
-
+    @NotNull
     private Double totalPurchases;
-
+    
     private String employeeId;
 
     private String clientId;
