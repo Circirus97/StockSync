@@ -17,7 +17,7 @@ public class InventaryToStoreResponse {
     private String id;
     private LocalDate date;
 
-    private StoreToEmployeeResponse store;
+    private StoreResponse store;
     private ProductResponse product;
 
 }

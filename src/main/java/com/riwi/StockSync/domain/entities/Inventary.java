@@ -1,6 +1,7 @@
 package com.riwi.StockSync.domain.entities;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -32,7 +33,7 @@ public class Inventary {
     private String id;
 
     @DateTimeFormat
-    private LocalDate date;
+    private LocalDateTime dateTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="colum_id",referencedColumnName = "id")
@@ -43,6 +44,7 @@ public class Inventary {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<Product> products;
+
 
 
 }

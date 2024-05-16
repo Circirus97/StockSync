@@ -1,44 +1,98 @@
 package com.riwi.StockSync.infrastructure.services;
 
-import org.springframework.data.domain.Page;
-
 import com.riwi.StockSync.api.dto.request.InventaryRequest;
-import com.riwi.StockSync.api.dto.response.InventaryToStoreResponse;
+import com.riwi.StockSync.api.dto.response.StoreResponse;
+import com.riwi.StockSync.domain.entities.Inventary;
+import com.riwi.StockSync.domain.entities.Store;
+import com.riwi.StockSync.domain.repositories.InventaryRepository;
+import com.riwi.StockSync.domain.repositories.StoreRepository;
 import com.riwi.StockSync.infrastructure.abstract_services.IInventaryService;
+import com.riwi.StockSync.util.exceptions.BadRequestExeption;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import com.riwi.StockSync.api.dto.response.InventaryToStoreResponse;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
 
 
+@Service
+@AllArgsConstructor
+public class InventaryService  implements IInventaryService {
 
-public class InventaryService  implements IInventaryService{
+
+    @Autowired
+    private final InventaryRepository inventaryRepository;
+    private final StoreRepository storeRepository;
 
     @Override
     public Page<InventaryToStoreResponse> getAll(int page, int size) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAll'");
+        if(page < 0) page = 0;
+        PageRequest pagination = PageRequest.of(page, size);
+
+        return this.inventaryRepository.findAll(pagination).map(this::entityToResponse);
+
     }
 
     @Override
     public InventaryToStoreResponse create(InventaryRequest request) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'create'");
+        Store store = this.storeRepository.findById(request.getStoreId()).orElseThrow(() -> new BadRequestExeption("store"));
+
+        Inventary inventary = this.requestToInventary(request, new Inventary());
+        inventary.setStore(store);
+
+        return this.entityToResponse(this.inventaryRepository.save(inventary));
     }
 
     @Override
     public InventaryToStoreResponse update(InventaryRequest request, String id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        Inventary inventaryToUpdate = this.find(id);
+
+        Inventary inventary = this.requestToEntity(request, inventaryToUpdate);
+        return this.entityToResponse(this.inventaryRepository.save(inventary));
+
     }
 
     @Override
     public void delete(String id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        Inventary inventary = this.find(id);
+        this.inventaryRepository.delete(inventary);
     }
 
     @Override
     public InventaryToStoreResponse getById(String id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getById'");
+        Inventary inventary = this.find(id);
+        return  this.entityToResponse(inventary);
+
     }
 
-   
+    private InventaryToStoreResponse entityToResponse(Inventary entity){
+
+        InventaryToStoreResponse response = new InventaryToStoreResponse();
+        BeanUtils.copyProperties(entity, response);
+        StoreResponse storeDto = new StoreResponse();
+        BeanUtils.copyProperties(entity.getStore(), storeDto);
+        response.setStore(storeDto);
+        return response;
+    }
+
+    private Inventary requestToInventary(InventaryRequest request, Inventary entity){
+        entity.setDateTime(request.getDateTime());
+
+        return entity;
+    }
+
+    private Inventary requestToEntity(InventaryRequest entity, Inventary inventary){
+        inventary.setDateTime(entity.getDateTime());
+
+        return inventary;
+    }
+
+
+    private Inventary find(String id){
+        return this.inventaryRepository.findById(id).orElseThrow(() -> new BadRequestExeption("inventary"));
+    }
+
+
 }
