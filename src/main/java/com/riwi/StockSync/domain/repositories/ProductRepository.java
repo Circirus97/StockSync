@@ -7,6 +7,6 @@ import com.riwi.StockSync.domain.entities.Product;
 
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, String>{
+public interface ProductRepository extends JpaRepository<Product, Long>{
     
 }

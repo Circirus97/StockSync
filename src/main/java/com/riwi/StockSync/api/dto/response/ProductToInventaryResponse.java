@@ -13,7 +13,7 @@ import java.math.BigInteger;
 @NoArgsConstructor
 public class ProductToInventaryResponse {
 
-    private String Id;
+    private Long Id;
     private String name;
     private BigInteger price;
     private String size;

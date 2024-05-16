@@ -36,7 +36,7 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public ProductToInventaryResponse create(com.riwi.StockSync.api.dto.request.ProductRequest request) {
+    public ProductToInventaryResponse create(ProductRequest request) {
 
         Inventary inventary = this.inventaryRepository.findById(request.getInventaryId()).orElseThrow(() -> new BadRequestExeption("inventary"));
 
@@ -47,7 +47,7 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public ProductToInventaryResponse update(com.riwi.StockSync.api.dto.request.ProductRequest request, String id) {
+    public ProductToInventaryResponse update(ProductRequest request, Long id) {
         Product productToUpdate = this.find(id);
 
         Product product = this.requestToEntity(request, productToUpdate);
@@ -55,13 +55,13 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public void delete(String id) {
+    public void delete(Long id) {
         Product product = this.find(id);
         this.productRepository.delete(product);
     }
 
     @Override
-    public ProductToInventaryResponse getById(String id) {
+    public ProductToInventaryResponse getById(Long id) {
         Product product = this.find(id);
         return  this.entityToResponse(product);
     }
@@ -97,7 +97,7 @@ public class ProductService implements IProductService {
         return product;
     }
 
-    private Product find(String id) {
+    private Product find(Long id) {
         return this.productRepository.findById(id).orElseThrow(() -> new BadRequestExeption("product"));
     }
 
