@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProductResponse {
 
-    private String Id;
+    private Long Id;
     private String name;
     private BigInteger price;
     private String size;

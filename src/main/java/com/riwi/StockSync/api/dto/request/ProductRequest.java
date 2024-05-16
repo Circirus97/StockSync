@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 public class ProductRequest {
 
-    private String id;
+    private Long id;
     private String name;
     private BigInteger price;
     private String size;

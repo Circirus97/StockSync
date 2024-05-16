@@ -14,5 +14,5 @@ public class ItemRequest {
     private String id;
     private int quantity;    
     private String invoice_id;
-    private String product_id;
+    private Long product_id;
 }
