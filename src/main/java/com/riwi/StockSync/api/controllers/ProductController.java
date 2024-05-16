@@ -27,7 +27,7 @@ public class ProductController {
         return ResponseEntity.ok(this.productService.getAll(page-1, size));
     }
 
-    @GetMapping(path = "/{id")
+    @GetMapping(path = "/{id}")
     public ResponseEntity<ProductToInventaryResponse> get (
             @PathVariable String id){
 
