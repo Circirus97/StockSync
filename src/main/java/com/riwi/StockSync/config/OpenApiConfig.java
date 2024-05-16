@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
         info = @Info(
                 title = "StockSync",
                 version = "1.0",
-                description = "Sistema de gestión de inventarios y facturación para tiendas,con la capacidad de administrar múltiples tiendas de manera simultánea y proporcionar funcionalidades diferenciadas para empleados y administradores."
+                description = "Inventory and billing management system for stores, with the ability to manage multiple stores simultaneously and provide differentiated functionalities for employees and administrators."
         )
 )
 public class OpenApiConfig {
