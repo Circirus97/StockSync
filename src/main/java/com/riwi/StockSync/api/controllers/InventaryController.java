@@ -4,6 +4,8 @@ package com.riwi.StockSync.api.controllers;
 import com.riwi.StockSync.api.dto.request.InventaryRequest;
 import com.riwi.StockSync.api.dto.response.InventaryToStoreResponse;
 import com.riwi.StockSync.infrastructure.abstract_services.IInventaryService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,12 +15,17 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/inventary")
 @RequiredArgsConstructor
+@Tag(name = "Inventaries")
 public class InventaryController {
 
     @Autowired
     private final IInventaryService inventaryService;
 
 
+    @Operation(
+            summary = "List all existing inventories in a store",
+            description = "Retrieve all inventories related to a store along with their information (name, location)."
+    )
     @GetMapping
     public ResponseEntity<Page<InventaryToStoreResponse>> getAll(
             @RequestParam(defaultValue = "1") int page,
@@ -27,14 +34,21 @@ public class InventaryController {
 
     }
 
+    @Operation(
+            summary = "Show the inventory that belongs to that id.",
+            description = "Retrieve the inventory related to a store."
+    )
     @GetMapping(path = "/{id}")
-    public ResponseEntity<InventaryToStoreResponse>get (
+    public ResponseEntity<InventaryToStoreResponse> getById(
             @PathVariable String id
     ){
         return ResponseEntity.ok(this.inventaryService.getById(id));
     }
 
-
+    @Operation(
+            summary = "Create an inventory.",
+            description = "Create an inventory for a specific store requiring the following data: store id and creation date."
+    )
     @PostMapping
     public ResponseEntity<InventaryToStoreResponse> insert(
             @RequestBody InventaryRequest inventary
@@ -42,6 +56,10 @@ public class InventaryController {
         return ResponseEntity.ok(this.inventaryService.create(inventary));
     }
 
+    @Operation(
+            summary = "Delete an inventory.",
+            description = "Delete a specific inventory by passing its id."
+    )
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<Void> delete(
             @PathVariable String id
@@ -50,6 +68,10 @@ public class InventaryController {
         return ResponseEntity.noContent().build();
     }
 
+    @Operation(
+            summary = "Update an inventory.",
+            description = "Update a specific inventory by passing its id and returning the updated inventory."
+    )
     @PutMapping(path = "/{id}")
     public ResponseEntity<InventaryToStoreResponse>update(
             @PathVariable String id,
