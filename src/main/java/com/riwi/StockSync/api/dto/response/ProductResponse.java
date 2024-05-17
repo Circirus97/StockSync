@@ -18,5 +18,6 @@ public class ProductResponse {
     private BigInteger price;
     private String size;
     private String color;
+    private Integer stock;
 
 }

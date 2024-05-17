@@ -132,7 +132,7 @@ public class InvoiceService implements IInvoiceService {
         return entity;
     }
 
-    private Invoice find(String id){
+    private Invoice find(Long id){
         return this.invoiceRepository.findById(id)
                 .orElseThrow(() -> new BadRequestExeption("Invoice"));
     }

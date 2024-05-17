@@ -18,12 +18,13 @@ import lombok.ToString;
 public class Product {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String Id;
 
     @Column(length = 255, nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private BigInteger price;
 
     @Column(length = 255, nullable = false)
@@ -31,6 +32,9 @@ public class Product {
 
     @Column(length = 255, nullable = false)
     private String color;
+
+    @Column(nullable = false)
+    private Integer stock;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
