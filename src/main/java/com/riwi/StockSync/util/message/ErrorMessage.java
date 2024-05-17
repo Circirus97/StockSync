@@ -9,6 +9,7 @@ public class ErrorMessage {
     public static final String RequiredPhone= "The phone is required";
     public static final String RequiredDocumentType = "The document type is required";
     public static final String RequiredDocumentNumeber= "The document number is required";
+    public static final String RequiredId = "The foreing key is required";
    
     public static String IdNotFound(String entity) {
         
