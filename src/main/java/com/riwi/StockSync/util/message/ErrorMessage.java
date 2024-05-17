@@ -6,6 +6,9 @@ public class ErrorMessage {
     public static final String RequiredLocation= "Location is required";
     public static final String MaxCharacters40= "The name must have a maximum of 40 characters";
     public static final String MaxCharacters15= "The identity must have a maximum of 15 characters";
+    public static final String RequiredPhone= "The phone is required";
+    public static final String RequiredDocumentType = "The document type is required";
+    public static final String RequiredDocumentNumeber= "The document number is required";
    
     public static String IdNotFound(String entity) {
         
