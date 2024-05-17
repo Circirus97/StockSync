@@ -16,6 +16,8 @@ import com.riwi.StockSync.infrastructure.abstract_services.IProductService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import javax.swing.*;
+
 @Service
 @AllArgsConstructor
 public class ProductService implements IProductService {
@@ -83,6 +85,7 @@ public class ProductService implements IProductService {
         entity.setPrice(request.getPrice());
         entity.setSize(request.getSize());
         entity.setColor(request.getColor());
+        entity.setStock(request.getStock());
 
         return entity;
 
@@ -93,6 +96,7 @@ public class ProductService implements IProductService {
         product.setPrice(entity.getPrice());
         product.setSize(entity.getSize());
         product.setColor(entity.getColor());
+        product.setStock(entity.getStock());
 
         return product;
     }

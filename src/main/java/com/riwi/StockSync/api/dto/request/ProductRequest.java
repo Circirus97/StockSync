@@ -14,11 +14,13 @@ import java.util.List;
 @NoArgsConstructor
 public class ProductRequest {
 
+
     private Long id;
     private String name;
     private BigInteger price;
     private String size;
     private String color;
+    private Integer stock;
 
     private String inventaryId;
 
