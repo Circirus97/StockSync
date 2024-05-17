@@ -16,7 +16,7 @@ public class ClientResponse {
     private String id;
     private String name;
     private String email;
-    private String phone;
+    private String phoneNumber;
     private DocumentType documentType;
     private int documentNumber;
 }

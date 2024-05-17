@@ -23,7 +23,7 @@ public class ClientRequest {
     private String email;
     @NotBlank(message = ErrorMessage.RequiredPhone)
     @Size(max = 11, min = 10)
-    private String phone;
+    private String phoneNumber;
     @NotBlank(message = ErrorMessage.RequiredDocumentType)
     private DocumentType documentType;
     @NotBlank(message = ErrorMessage.RequiredDocumentNumeber)
