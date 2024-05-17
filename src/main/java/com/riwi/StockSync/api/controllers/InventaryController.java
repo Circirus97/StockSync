@@ -1,10 +1,14 @@
 package com.riwi.StockSync.api.controllers;
 
 
+import com.riwi.StockSync.api.dto.errors.ErrorResponse;
 import com.riwi.StockSync.api.dto.request.InventaryRequest;
 import com.riwi.StockSync.api.dto.response.InventaryToStoreResponse;
 import com.riwi.StockSync.infrastructure.abstract_services.IInventaryService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +38,17 @@ public class InventaryController {
 
     }
 
+
+    @ApiResponse(
+            responseCode = "400",
+            description = "The id is not valid",
+            content = {
+                    @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorResponse.class)
+                    )
+            }
+    )
     @Operation(
             summary = "Show the inventory that belongs to that id.",
             description = "Retrieve the inventory related to a store."
@@ -44,6 +59,7 @@ public class InventaryController {
     ){
         return ResponseEntity.ok(this.inventaryService.getById(id));
     }
+
 
     @Operation(
             summary = "Create an inventory.",
@@ -56,6 +72,17 @@ public class InventaryController {
         return ResponseEntity.ok(this.inventaryService.create(inventary));
     }
 
+
+    @ApiResponse(
+            responseCode = "400",
+            description = "The id is not valid",
+            content = {
+                    @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorResponse.class)
+                    )
+            }
+    )
     @Operation(
             summary = "Delete an inventory.",
             description = "Delete a specific inventory by passing its id."
@@ -68,6 +95,17 @@ public class InventaryController {
         return ResponseEntity.noContent().build();
     }
 
+
+    @ApiResponse(
+            responseCode = "400",
+            description = "The id is not valid",
+            content = {
+                    @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorResponse.class)
+                    )
+            }
+    )
     @Operation(
             summary = "Update an inventory.",
             description = "Update a specific inventory by passing its id and returning the updated inventory."
