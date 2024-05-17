@@ -3,6 +3,7 @@ package com.riwi.StockSync.api.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,7 +43,7 @@ public class ClientController {
     @Operation(summary = "Create a new client",
         description = "Create a new client with name, email, phone number, document number and type" )
     @PostMapping
-    public ResponseEntity<ClientToInvoiceResponse> create(@RequestBody ClientRequest client){
+    public ResponseEntity<ClientToInvoiceResponse> create(@Validated @RequestBody ClientRequest client){
         return  ResponseEntity.ok(this.clientService.create(client));
     }
 
@@ -56,7 +57,7 @@ public class ClientController {
     @Operation(summary = "Update a client ",
             description = "Update a client by giving an ID and you have to put name, email, phone number, document number and type" )
     @PutMapping(path = "/{id}")
-    public ResponseEntity<ClientToInvoiceResponse> update(@PathVariable String id, @RequestBody ClientRequest client){
+    public ResponseEntity<ClientToInvoiceResponse> update(@PathVariable String id,@Validated @RequestBody ClientRequest client){
         return ResponseEntity.ok(this.clientService.update(client, id));
     }
 
