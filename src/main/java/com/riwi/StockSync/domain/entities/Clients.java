@@ -28,7 +28,7 @@ public class Clients{
     private String email;
 
     @Column(length = 11, nullable = false)
-    private int phoneNumber;
+    private String phoneNumber;
 
     @Enumerated(EnumType.STRING)
     private DocumentType documentType;
