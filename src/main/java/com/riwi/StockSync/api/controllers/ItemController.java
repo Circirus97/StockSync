@@ -3,6 +3,7 @@ package com.riwi.StockSync.api.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,7 +52,7 @@ public class ItemController {
     @PostMapping
     @Operation(summary = "Create a new Item",
         description = "Create a new Item with quantity, invoice_id and product_id" )
-    public ResponseEntity<ItemResponseCompleteInformation> create(@RequestBody ItemRequest entity) {
+    public ResponseEntity<ItemResponseCompleteInformation> create(@Validated @RequestBody ItemRequest entity) {
         
         return ResponseEntity.ok(this.iItemService.create(entity));
     }
@@ -59,7 +60,7 @@ public class ItemController {
     @PutMapping(path = "/{id}")
     @Operation(summary = "Update a Item ",
     description = "Update a Item by giving an ID and you have to put quantity, invoice_id and profuct_id " )
-    public ResponseEntity<ItemResponseCompleteInformation>update(@PathVariable String id, @RequestBody ItemRequest item){
+    public ResponseEntity<ItemResponseCompleteInformation>update(@PathVariable String id,@Validated @RequestBody ItemRequest item){
         return ResponseEntity.ok(this.iItemService.update(item, id));
     }
 
