@@ -21,6 +21,7 @@ public class ProductRequest {
     private String color;
 
     private String inventaryId;
+
     //private List<ItemRequest>itemList;
 
 }

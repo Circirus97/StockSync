@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -15,7 +16,7 @@ import java.time.LocalDate;
 public class InventaryToStoreResponse {
 
     private String id;
-    private LocalDate date;
+    private LocalDateTime dateTime;
 
     private StoreResponse store;
     private ProductResponse product;

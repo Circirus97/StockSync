@@ -74,10 +74,13 @@ public class InventaryService  implements IInventaryService {
         StoreResponse storeDto = new StoreResponse();
         BeanUtils.copyProperties(entity.getStore(), storeDto);
         response.setStore(storeDto);
+
         return response;
     }
 
     private Inventary requestToInventary(InventaryRequest request, Inventary entity){
+
+
         entity.setDateTime(request.getDateTime());
 
         return entity;
