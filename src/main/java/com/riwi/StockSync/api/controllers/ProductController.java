@@ -1,10 +1,14 @@
 package com.riwi.StockSync.api.controllers;
 
 
+import com.riwi.StockSync.api.dto.errors.ErrorResponse;
 import com.riwi.StockSync.api.dto.request.ProductRequest;
 import com.riwi.StockSync.api.dto.response.ProductToInventaryResponse;
 import com.riwi.StockSync.infrastructure.abstract_services.IProductService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -31,6 +35,17 @@ public class ProductController {
         return ResponseEntity.ok(this.productService.getAll(page-1, size));
     }
 
+
+    @ApiResponse(
+            responseCode = "400",
+            description = "The id is not valid",
+            content = {
+                    @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorResponse.class)
+                    )
+            }
+    )
     @Operation(
             summary = "Show the product that belongs to that id.",
             description = "Retrieve the product that belongs to that id.."
@@ -41,6 +56,7 @@ public class ProductController {
 
         return ResponseEntity.ok(this.productService.getById(id));
     }
+
 
     @Operation(
             summary = "Create a product.",
@@ -53,6 +69,17 @@ public class ProductController {
         return ResponseEntity.ok(this.productService.create(product));
     }
 
+
+    @ApiResponse(
+            responseCode = "400",
+            description = "The id is not valid",
+            content = {
+                    @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorResponse.class)
+                    )
+            }
+    )
     @Operation(
             summary = "Delete a product.",
             description = "Delete a specific product by passing its id."
@@ -65,6 +92,17 @@ public class ProductController {
         return ResponseEntity.noContent().build();
     }
 
+
+    @ApiResponse(
+            responseCode = "400",
+            description = "The id is not valid",
+            content = {
+                    @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorResponse.class)
+                    )
+            }
+    )
     @Operation(
             summary = "Update a product.",
             description = "Update a specific product by passing its id and returning the updated product."
