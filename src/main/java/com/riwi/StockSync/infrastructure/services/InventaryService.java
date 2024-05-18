@@ -1,6 +1,7 @@
 package com.riwi.StockSync.infrastructure.services;
 
 import com.riwi.StockSync.api.dto.request.InventaryRequest;
+import com.riwi.StockSync.api.dto.response.InventaryToStoreResponse;
 import com.riwi.StockSync.api.dto.response.StoreResponse;
 import com.riwi.StockSync.domain.entities.Inventary;
 import com.riwi.StockSync.domain.entities.Store;
@@ -12,7 +13,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import com.riwi.StockSync.api.dto.response.InventaryToStoreResponse;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 

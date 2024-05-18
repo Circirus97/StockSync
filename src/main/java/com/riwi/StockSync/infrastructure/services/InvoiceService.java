@@ -1,7 +1,6 @@
 package com.riwi.StockSync.infrastructure.services;
 
 import com.riwi.StockSync.api.dto.request.InvoiceRequest;
-import com.riwi.StockSync.api.dto.request.ProductRequest;
 import com.riwi.StockSync.api.dto.response.*;
 import com.riwi.StockSync.domain.entities.*;
 import com.riwi.StockSync.domain.repositories.*;
@@ -12,7 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 

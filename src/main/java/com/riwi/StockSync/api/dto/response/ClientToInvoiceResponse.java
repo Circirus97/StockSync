@@ -1,14 +1,12 @@
 package com.riwi.StockSync.api.dto.response;
 
-import java.util.List;
-
-// import com.riwi.StockSync.domain.entities.Invoice;
 import com.riwi.StockSync.util.enums.DocumentType;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @Builder
