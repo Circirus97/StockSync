@@ -37,7 +37,7 @@ public class ClientController {
     public ResponseEntity<Page<ClientToInvoiceResponse>> getAll(
         @RequestParam(defaultValue = "1") int page,
         @RequestParam(defaultValue = "3") int size){
-            return ResponseEntity.ok(this.clientService.getAll(page, size));
+        return ResponseEntity.ok(this.clientService.getAll(page -1 , size));
         }
 
     @Operation(summary = "Create a new client",
