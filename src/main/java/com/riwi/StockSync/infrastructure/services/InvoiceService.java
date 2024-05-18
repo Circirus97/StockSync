@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,6 @@ public class InvoiceService implements IInvoiceService {
     private final StoreRepository storeRepository;
     private final ClientRepository clientRepository;
     private final ProductRepository productRepository;
-
 
     @Override
     public Page<InvoiceCompleteInfoResponse> getAll(int page, int size) {
@@ -61,12 +61,16 @@ public class InvoiceService implements IInvoiceService {
             throw new BadRequestExeption("there is not enough stock");
         }
 
+        BigInteger total = calculateTotal(itemList);
+
+
         Invoice invoice = this.requestToInvoice(request, new Invoice());
 
         invoice.setStore(store);
         invoice.setEmployee(employee);
         invoice.setClient(client);
         invoice.setItemList(itemList);
+        invoice.setTotalPurchases(Double.valueOf(String.valueOf(total)));
 
         return this.entityToResponse(this.invoiceRepository.save(invoice));
     }
@@ -154,5 +158,12 @@ public class InvoiceService implements IInvoiceService {
 
        return this.productRepository.save(product);
     }
+
+    private BigInteger calculateTotal(List<Item> itemList) {
+        return itemList.stream()
+                .map(item -> item.getProduct().getPrice().multiply(BigInteger.valueOf(item.getQuantity())))
+                .reduce(BigInteger.ZERO, BigInteger::add);
+    }
+
 
 }
