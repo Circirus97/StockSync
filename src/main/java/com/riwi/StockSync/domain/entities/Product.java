@@ -18,8 +18,8 @@ import lombok.ToString;
 public class Product {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String Id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
 
     @Column(length = 255, nullable = false)
     private String name;

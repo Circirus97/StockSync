@@ -8,7 +8,7 @@ public class ErrorMessage {
     public static final String MaxCharacters15= "The identity must have a maximum of 15 characters";
     public static final String RequiredPhone= "The phone is required";
     public static final String RequiredDocumentType = "The document type is required";
-    public static final String RequiredDocumentNumeber= "The document number is required";
+    public static final String RequiredDocumentNumber= "The document number is required";
     public static final String RequiredId = "The foreing key is required";
    
     public static String IdNotFound(String entity) {
