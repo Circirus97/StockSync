@@ -13,6 +13,6 @@ import lombok.NoArgsConstructor;
 public class ItemResponse {
 
     private int quantity;
-    private ProductResponse productResponse;
+    private InvoiceToProductResponse productResponse;
 
 }

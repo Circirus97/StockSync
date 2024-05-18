@@ -2,6 +2,7 @@ package com.riwi.StockSync.api.dto.response;
 
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,6 +16,6 @@ import lombok.NoArgsConstructor;
 public class InventaryResponse {
     
     private String id;
-    private LocalDate date;
+    private LocalDateTime date;
     
 }
