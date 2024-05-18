@@ -1,7 +1,6 @@
 package com.riwi.StockSync.api.dto.response;
 
 import com.riwi.StockSync.util.enums.DocumentType;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

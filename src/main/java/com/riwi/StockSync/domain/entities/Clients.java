@@ -1,14 +1,10 @@
 package com.riwi.StockSync.domain.entities;
 
-import java.util.List;
-
 import com.riwi.StockSync.util.enums.DocumentType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "clients")

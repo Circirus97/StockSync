@@ -4,7 +4,6 @@ import com.riwi.StockSync.api.dto.errors.ErrorResponse;
 import com.riwi.StockSync.api.dto.request.StoreRequest;
 import com.riwi.StockSync.api.dto.response.StoreToEmployeeResponse;
 import com.riwi.StockSync.infrastructure.abstract_services.IStoreService;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
