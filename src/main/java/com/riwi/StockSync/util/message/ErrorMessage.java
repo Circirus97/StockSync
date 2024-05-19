@@ -10,6 +10,14 @@ public class ErrorMessage {
     public static final String RequiredDocumentType = "The document type is required";
     public static final String RequiredDocumentNumber= "The document number is required";
     public static final String RequiredId = "The foreing key is required";
+    public static final String RequiredPrice = "The price is required";
+    public static final String RequiredSize = "The size is required";
+    public static final String RequiredColor = "The color is required";
+    public static final String RequiredStock = "The stock is required";
+    public static final String RequiredDateTime = "The date is required";
+
+
+
    
     public static String IdNotFound(String entity) {
         
