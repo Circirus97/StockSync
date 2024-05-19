@@ -1,26 +1,17 @@
 package com.riwi.StockSync.api.controllers;
 
+import com.riwi.StockSync.api.dto.request.ClientRequest;
+import com.riwi.StockSync.api.dto.response.ClientResponse;
+import com.riwi.StockSync.api.dto.response.ClientToInvoiceResponse;
+import com.riwi.StockSync.infrastructure.abstract_services.IClientService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.riwi.StockSync.api.dto.request.ClientRequest;
-import com.riwi.StockSync.api.dto.response.ClientToInvoiceResponse;
-import com.riwi.StockSync.infrastructure.abstract_services.IClientService;
-
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/clients")
@@ -37,7 +28,7 @@ public class ClientController {
     public ResponseEntity<Page<ClientToInvoiceResponse>> getAll(
         @RequestParam(defaultValue = "1") int page,
         @RequestParam(defaultValue = "3") int size){
-            return ResponseEntity.ok(this.clientService.getAll(page, size));
+        return ResponseEntity.ok(this.clientService.getAll(page -1 , size));
         }
 
     @Operation(summary = "Create a new client",
@@ -68,4 +59,12 @@ public class ClientController {
         this.clientService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping(path = "/getByDocumentNumber/{documentNumber}")
+    //@GetMapping("/{documentNumber}")
+    public ResponseEntity<ClientToInvoiceResponse> getInvoiceByDocument(@PathVariable int documentNumber) {
+        ClientToInvoiceResponse invoice = clientService.getInvoiceByDocument(documentNumber);
+        return ResponseEntity.ok(invoice);
+    }
+
 }

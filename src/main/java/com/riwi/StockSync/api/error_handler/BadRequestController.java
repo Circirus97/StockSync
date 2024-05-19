@@ -1,17 +1,16 @@
 package com.riwi.StockSync.api.error_handler;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.riwi.StockSync.api.dto.errors.BaseErrorResponse;
+import com.riwi.StockSync.api.dto.errors.ErrorResponse;
+import com.riwi.StockSync.util.exceptions.BadRequestExeption;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.riwi.StockSync.api.dto.errors.BaseErrorResponse;
-import com.riwi.StockSync.api.dto.errors.ErrorResponse;
-import com.riwi.StockSync.util.exceptions.BadRequestExeption;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestControllerAdvice
 @ResponseStatus(code = HttpStatus.BAD_REQUEST)

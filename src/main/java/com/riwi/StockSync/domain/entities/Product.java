@@ -1,14 +1,10 @@
 package com.riwi.StockSync.domain.entities;
 
+import jakarta.persistence.*;
+import lombok.*;
+
 import java.math.BigInteger;
 import java.util.List;
-
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 
 @Entity(name = "products")

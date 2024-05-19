@@ -1,22 +1,22 @@
 package com.riwi.StockSync.api.dto.response;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.math.BigInteger;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class InventaryToStoreResponse {
+public class InvoiceToProductResponse {
 
-    private String id;
-    private LocalDateTime dateTime;
-    private StoreResponse store;
-    private ProductResponse product;
+    private Long Id;
+    private String name;
+    private BigInteger price;
+    private String size;
+    private String color;
 
 }

@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,6 @@ public class InvoiceService implements IInvoiceService {
     private final StoreRepository storeRepository;
     private final ClientRepository clientRepository;
     private final ProductRepository productRepository;
-
 
     @Override
     public Page<InvoiceCompleteInfoResponse> getAll(int page, int size) {
@@ -46,14 +46,23 @@ public class InvoiceService implements IInvoiceService {
         Clients client = this.clientRepository.findById(request.getClientId())
                 .orElseThrow(()-> new BadRequestExeption("client"));
 
-        List<Item> itemList = request.getItemList().stream()
-                .map(itemRequest ->  this.productRepository.findById(itemRequest.getProduct_id())
-                        .map(product -> Item.builder()
-                                .product(product)
-                                .quantity(itemRequest.getQuantity())
-                                .build())
-                        .orElseThrow(()-> new BadRequestExeption("product")))
+
+        List<Item> itemList =  request.getItemList().stream().map(itemRequest -> this.productRepository.findById(itemRequest.getProduct_id())
+                .filter(product -> product.getStock() >= itemRequest.getQuantity())
+                        .map(product -> restStock(product.getId(), itemRequest.getQuantity()))
+                .map(product -> Item.builder()
+                        .product(product)
+                        .quantity(itemRequest.getQuantity())
+                        .build())
+                .orElseThrow(()-> new BadRequestExeption("product")))
                 .toList();
+
+        if (itemList.isEmpty()) {
+            throw new BadRequestExeption("there is not enough stock");
+        }
+
+        BigInteger total = calculateTotal(itemList);
+
 
         Invoice invoice = this.requestToInvoice(request, new Invoice());
 
@@ -61,6 +70,7 @@ public class InvoiceService implements IInvoiceService {
         invoice.setEmployee(employee);
         invoice.setClient(client);
         invoice.setItemList(itemList);
+        invoice.setTotalPurchases(Double.valueOf(String.valueOf(total)));
 
         return this.entityToResponse(this.invoiceRepository.save(invoice));
     }
@@ -98,11 +108,12 @@ public class InvoiceService implements IInvoiceService {
                         .build())
                 .client(InvoiceToClientResponse.builder()
                         .name(invoice.getClient().getName())
-                        .documentType(invoice.getClient().getDocumentType())
                         .email(invoice.getClient().getEmail())
                         .phone(String.valueOf(invoice.getClient().getPhoneNumber()))
+                        .documentType(invoice.getClient().getDocumentType())
+                        .documentNumber(invoice.getClient().getDocumentNumber())
                         .build())
-                .employee(EmployeeResponse.builder()
+                .employee(InvoiceToEmployeeResponse.builder()
                         .id(invoice.getEmployee().getId())
                         .name(invoice.getEmployee().getName())
                         .build())
@@ -110,7 +121,8 @@ public class InvoiceService implements IInvoiceService {
                         .stream()
                         .map(item -> ItemResponse.builder()
                                 .quantity(item.getQuantity())
-                                .productResponse(ProductResponse.builder()
+                                .productResponse(InvoiceToProductResponse.builder()
+                                        .Id(item.getProduct().getId())
                                         .name(item.getProduct().getName())
                                         .price(item.getProduct().getPrice())
                                         .size(item.getProduct().getSize())
@@ -136,6 +148,33 @@ public class InvoiceService implements IInvoiceService {
         return this.invoiceRepository.findById(id)
                 .orElseThrow(() -> new BadRequestExeption("Invoice"));
     }
+
+    private Product restStock(Long id, Integer quantity){
+
+        Product product = this.productRepository.findById(id)
+                .orElseThrow( () -> new BadRequestExeption("Product not found"));
+
+        product.setStock(product.getStock() - quantity);
+
+       return this.productRepository.save(product);
+    }
+
+    private BigInteger calculateTotal(List<Item> itemList) {
+        return itemList.stream()
+                .map(item -> item.getProduct().getPrice().multiply(BigInteger.valueOf(item.getQuantity())))
+                .reduce(BigInteger.ZERO, BigInteger::add);
+    }
+
+   /* public InvoiceCompleteInfoResponse getInvoiceByDocument(int documentNumber) {
+
+        Clients client = clientRepository.findByDocumentNumber(documentNumber)
+                .orElseThrow(() -> new BadRequestExeption("Client not found"));
+
+        Invoice invoice = invoiceRepository.findByClient(client)
+                .orElseThrow(() -> new BadRequestExeption("Invoice not found for the client"));
+
+        return entityToResponse(invoice);
+    }*/
 
 
 

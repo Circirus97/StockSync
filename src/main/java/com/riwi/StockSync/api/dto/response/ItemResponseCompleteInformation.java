@@ -2,7 +2,6 @@ package com.riwi.StockSync.api.dto.response;
 
 import com.riwi.StockSync.domain.entities.Invoice;
 import com.riwi.StockSync.domain.entities.Product;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

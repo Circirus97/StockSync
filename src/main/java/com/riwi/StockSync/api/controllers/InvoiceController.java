@@ -4,7 +4,6 @@ import com.riwi.StockSync.api.dto.errors.ErrorResponse;
 import com.riwi.StockSync.api.dto.request.InvoiceRequest;
 import com.riwi.StockSync.api.dto.response.InvoiceCompleteInfoResponse;
 import com.riwi.StockSync.infrastructure.abstract_services.IInvoiceService;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -24,6 +23,8 @@ import java.util.Map;
 public class InvoiceController {
 
     private final IInvoiceService iInvoiceService;
+
+
     @Operation(summary ="Gets the paginated list of all invoices")
     @GetMapping
     public ResponseEntity<Page<InvoiceCompleteInfoResponse>> getAll(
@@ -83,4 +84,5 @@ public class InvoiceController {
     ){
         return ResponseEntity.ok(this.iInvoiceService.update(invoice, id));
     }
+
 }

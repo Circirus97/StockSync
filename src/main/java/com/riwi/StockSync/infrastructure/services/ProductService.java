@@ -2,21 +2,19 @@ package com.riwi.StockSync.infrastructure.services;
 
 import com.riwi.StockSync.api.dto.request.ProductRequest;
 import com.riwi.StockSync.api.dto.response.InventaryResponse;
+import com.riwi.StockSync.api.dto.response.ProductToInventaryResponse;
 import com.riwi.StockSync.domain.entities.Inventary;
 import com.riwi.StockSync.domain.entities.Product;
 import com.riwi.StockSync.domain.repositories.InventaryRepository;
 import com.riwi.StockSync.domain.repositories.ProductRepository;
+import com.riwi.StockSync.infrastructure.abstract_services.IProductService;
 import com.riwi.StockSync.util.exceptions.BadRequestExeption;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import com.riwi.StockSync.api.dto.response.ProductToInventaryResponse;
-import com.riwi.StockSync.infrastructure.abstract_services.IProductService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
-import javax.swing.*;
 
 @Service
 @AllArgsConstructor

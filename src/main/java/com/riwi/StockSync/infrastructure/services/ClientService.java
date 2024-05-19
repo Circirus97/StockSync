@@ -1,14 +1,5 @@
 package com.riwi.StockSync.infrastructure.services;
 
-import java.util.ArrayList;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Service;
-
 import com.riwi.StockSync.api.dto.request.ClientRequest;
 import com.riwi.StockSync.api.dto.response.ClientToInvoiceResponse;
 import com.riwi.StockSync.api.dto.response.InvoiceResponse;
@@ -17,8 +8,15 @@ import com.riwi.StockSync.domain.entities.Invoice;
 import com.riwi.StockSync.domain.repositories.ClientRepository;
 import com.riwi.StockSync.infrastructure.abstract_services.IClientService;
 import com.riwi.StockSync.util.exceptions.BadRequestExeption;
-
 import lombok.AllArgsConstructor;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -100,4 +98,13 @@ public class ClientService implements IClientService {
     private Clients find(String id){
         return this.clientRepository.findById(id).orElseThrow(()-> new BadRequestExeption("client"));
     }
+
+    public ClientToInvoiceResponse getInvoiceByDocument(int documentNumber) {
+
+        Clients client = clientRepository.findByDocumentNumber(documentNumber)
+                .orElseThrow(() -> new BadRequestExeption("Client not found"));
+
+        return entityToResponse(client);
+    }
+
 }
