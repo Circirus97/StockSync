@@ -98,4 +98,13 @@ public class ClientService implements IClientService {
     private Clients find(String id){
         return this.clientRepository.findById(id).orElseThrow(()-> new BadRequestExeption("client"));
     }
+
+    public ClientToInvoiceResponse getInvoiceByDocument(int documentNumber) {
+
+        Clients client = clientRepository.findByDocumentNumber(documentNumber)
+                .orElseThrow(() -> new BadRequestExeption("Client not found"));
+
+        return entityToResponse(client);
+    }
+
 }
