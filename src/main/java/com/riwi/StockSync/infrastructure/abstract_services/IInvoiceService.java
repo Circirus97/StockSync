@@ -6,4 +6,6 @@ import com.riwi.StockSync.api.dto.response.InvoiceCompleteInfoResponse;
 
 public interface IInvoiceService extends CrudServices<InvoiceRequest, InvoiceCompleteInfoResponse, String> {
 
+
+    InvoiceCompleteInfoResponse getInvoiceByDocument(int documentNumber);
 }
