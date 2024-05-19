@@ -9,33 +9,86 @@
 
     <style>
 
-        h1{
-            color: black;
-        }
-
-        Img{
-            width: auto;
-            height: auto;
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
             display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f4f4f4;
         }
 
+        img {
+            width: 150px;
+            margin: 20px 0;
+        }
+
+        h1 {
+            margin: 20px 0;
+            font-size: 24px;
+            color: #333;
+        }
+
+        table {
+            width: 80%;
+            max-width: 600px;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+            font-weight: bold;
+        }
+
+        td {
+            color: #555;
+        }
     </style>
 </head>
 <body>
 
-    <img src="src/resources/main/Img/logo_gris-removebg-preview"/>
+    <img src="/src/main/resources/Img/logo_gris-removebg-preview.png" alt="">
 
     <h1>INVOICE {idInvoice}</h1>
 
-    <h2>STORE: {store}</h2>
-    <h2>CLIENT: {nameClient}</h2>
-    <h2>DATE: {date}</h2>
-    <h2>EMPLOYEE: {nameEmployee}</h2>
 
-
-    <h3>ITEM LIST: {itemList}</h3>
-    <h3>TOTAL: {totalPurchases}</h3>
-
+    <table>
+        <tr>
+            <th>STORE</th>
+            <td>{store}</td>
+        </tr>
+        <tr>
+            <th>CLIENT</th>
+            <td>{nameClient}</td>
+        </tr>
+        <tr>
+            <th>DATE</th>
+            <td>{date}</td>
+        </tr>
+        <tr>
+            <th>EMPLOYEE</th>
+            <td>{nameEmployee}</td>
+        </tr>
+        <tr>
+            <th>ITEM LIST</th>
+            <td>{itemList}</td>
+        </tr>
+        <tr>
+            <th>TOTAL</th>
+            <td>{totalPurchases}</td>
+        </tr>
+    </table>
 
 </body>
 </html>
