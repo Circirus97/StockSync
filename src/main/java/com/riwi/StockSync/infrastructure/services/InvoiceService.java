@@ -1,6 +1,7 @@
 package com.riwi.StockSync.infrastructure.services;
 
 import com.riwi.StockSync.api.dto.request.InvoiceRequest;
+import com.riwi.StockSync.api.dto.request.ItemRequest;
 import com.riwi.StockSync.api.dto.response.*;
 import com.riwi.StockSync.domain.entities.*;
 import com.riwi.StockSync.domain.repositories.*;
@@ -24,6 +25,7 @@ public class InvoiceService implements IInvoiceService {
     private final StoreRepository storeRepository;
     private final ClientRepository clientRepository;
     private final ProductRepository productRepository;
+    private  final ItemService itemService;
 
     @Override
     public Page<InvoiceCompleteInfoResponse> getAll(int page, int size) {
@@ -72,7 +74,18 @@ public class InvoiceService implements IInvoiceService {
         invoice.setItemList(itemList);
         invoice.setTotalPurchases(Double.valueOf(String.valueOf(total)));
 
-        return this.entityToResponse(this.invoiceRepository.save(invoice));
+        InvoiceCompleteInfoResponse invoiceCompleteInfoResponse =  this.entityToResponse(this.invoiceRepository.save(invoice));
+
+       invoiceCompleteInfoResponse.getItemList().stream()
+                .map(itemResponse -> this.itemService.create(ItemRequest.builder()
+                        .invoice_id(invoiceCompleteInfoResponse.getId())
+                        .product_id(itemResponse.getProductResponse().getId())
+                        .quantity(itemResponse.getQuantity())
+                        .build()))
+                .toList();
+
+        return invoiceCompleteInfoResponse;
+
     }
 
     @Override
