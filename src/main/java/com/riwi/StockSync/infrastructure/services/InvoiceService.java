@@ -165,7 +165,7 @@ public class InvoiceService implements IInvoiceService {
                 .reduce(BigInteger.ZERO, BigInteger::add);
     }
 
-    public InvoiceCompleteInfoResponse getInvoiceByDocument(int documentNumber) {
+   /* public InvoiceCompleteInfoResponse getInvoiceByDocument(int documentNumber) {
 
         Clients client = clientRepository.findByDocumentNumber(documentNumber)
                 .orElseThrow(() -> new BadRequestExeption("Client not found"));
@@ -174,7 +174,7 @@ public class InvoiceService implements IInvoiceService {
                 .orElseThrow(() -> new BadRequestExeption("Invoice not found for the client"));
 
         return entityToResponse(invoice);
-    }
+    }*/
 
 
 

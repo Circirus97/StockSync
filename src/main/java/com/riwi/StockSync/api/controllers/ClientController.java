@@ -1,6 +1,7 @@
 package com.riwi.StockSync.api.controllers;
 
 import com.riwi.StockSync.api.dto.request.ClientRequest;
+import com.riwi.StockSync.api.dto.response.ClientResponse;
 import com.riwi.StockSync.api.dto.response.ClientToInvoiceResponse;
 import com.riwi.StockSync.infrastructure.abstract_services.IClientService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -58,4 +59,12 @@ public class ClientController {
         this.clientService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping(path = "/getByDocumentNumber/{documentNumber}")
+    //@GetMapping("/{documentNumber}")
+    public ResponseEntity<ClientToInvoiceResponse> getInvoiceByDocument(@PathVariable int documentNumber) {
+        ClientToInvoiceResponse invoice = clientService.getInvoiceByDocument(documentNumber);
+        return ResponseEntity.ok(invoice);
+    }
+
 }

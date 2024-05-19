@@ -10,5 +10,5 @@ import java.util.Optional;
 @Repository
 public interface InvoiceRepository extends JpaRepository<Invoice, String> {
 
-    Optional<Invoice> findByClient(Clients client);
+    /*Optional<Invoice> findByClient(Clients client);*/
 }
