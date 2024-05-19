@@ -76,5 +76,12 @@ public class EmployeeController {
         return ResponseEntity.ok(this.employeeService.update(employee, id));
     }
 
+    @GetMapping(path = "/getByDocumentNumber/{documentNumber}")
+    //@GetMapping("/{documentNumber}")
+    public ResponseEntity<EmployeeToStoreResponse> getInvoiceByDocument(@PathVariable String documentNumber) {
+        EmployeeToStoreResponse employee = employeeService.getInvoiceByDocument(documentNumber);
+        return ResponseEntity.ok(employee);
+    }
+
     
 }
