@@ -4,10 +4,12 @@ import com.riwi.StockSync.api.dto.errors.ErrorResponse;
 import com.riwi.StockSync.api.dto.request.InvoiceRequest;
 import com.riwi.StockSync.api.dto.response.InvoiceCompleteInfoResponse;
 import com.riwi.StockSync.infrastructure.abstract_services.IInvoiceService;
+import com.riwi.StockSync.infrastructure.services.InvoiceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +22,12 @@ import java.util.Map;
 @RestController
 @RequestMapping(path = "/invoice")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class InvoiceController {
 
     private final IInvoiceService iInvoiceService;
+
+
     @Operation(summary ="Gets the paginated list of all invoices")
     @GetMapping
     public ResponseEntity<Page<InvoiceCompleteInfoResponse>> getAll(
@@ -81,5 +86,11 @@ public class InvoiceController {
             @RequestBody InvoiceRequest invoice
     ){
         return ResponseEntity.ok(this.iInvoiceService.update(invoice, id));
+    }
+
+    @GetMapping("/document/{documentNumber}")
+    public ResponseEntity<InvoiceCompleteInfoResponse> getInvoiceByDocument(@PathVariable int documentNumber) {
+        InvoiceCompleteInfoResponse invoice = iInvoiceService.getInvoiceByDocument(documentNumber);
+        return ResponseEntity.ok(invoice);
     }
 }
