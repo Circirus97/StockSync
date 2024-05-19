@@ -1,4 +1,4 @@
-package com.riwi.StockSync.infrastructure.helpers;
+/*package com.riwi.StockSync.infrastructure.helpers;
 
 import com.riwi.StockSync.api.dto.response.EmployeeResponse;
 import com.riwi.StockSync.api.dto.response.InvoiceToClientResponse;
@@ -41,3 +41,4 @@ public class EmailHelper {
         }
     }
 }
+*/

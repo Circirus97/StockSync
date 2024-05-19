@@ -101,5 +101,13 @@ public class EmployeeService implements IEmployeeService {
         return employee;
 
     }
+
+    public EmployeeToStoreResponse getInvoiceByDocument(String documentNumber) {
+
+        Employee employee = employeeRepository.findByIdentity(documentNumber)
+                .orElseThrow(() -> new BadRequestExeption("Employe not found"));
+
+        return entityToResponse(employee);
+    }
     
 }
