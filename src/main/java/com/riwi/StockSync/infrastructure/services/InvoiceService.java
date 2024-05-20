@@ -1,6 +1,7 @@
 package com.riwi.StockSync.infrastructure.services;
 
 import com.riwi.StockSync.api.dto.request.InvoiceRequest;
+import com.riwi.StockSync.api.dto.request.ItemRequest;
 import com.riwi.StockSync.api.dto.response.*;
 import com.riwi.StockSync.domain.entities.*;
 import com.riwi.StockSync.domain.repositories.*;
@@ -27,6 +28,7 @@ public class InvoiceService implements IInvoiceService {
     private final StoreRepository storeRepository;
     private final ClientRepository clientRepository;
     private final ProductRepository productRepository;
+    private  final ItemService itemService;
 
     @Autowired
     private final EmailHelper emailHelper;
@@ -78,10 +80,25 @@ public class InvoiceService implements IInvoiceService {
         invoice.setItemList(itemList);
         invoice.setTotalPurchases(Double.valueOf(String.valueOf(total)));
 
+
         if (Objects.nonNull(client.getEmail())){
             this.emailHelper.sendMail(invoice.getId(), store.getName(), client.getEmail(), client.getName(), employee.getName(), invoice.getDate(),  itemList, invoice.getTotalPurchases());
         }
         return this.entityToResponse(this.invoiceRepository.save(invoice));
+
+        InvoiceCompleteInfoResponse invoiceCompleteInfoResponse =  this.entityToResponse(this.invoiceRepository.save(invoice));
+
+       invoiceCompleteInfoResponse.getItemList().stream()
+                .map(itemResponse -> this.itemService.create(ItemRequest.builder()
+                        .invoice_id(invoiceCompleteInfoResponse.getId())
+                        .product_id(itemResponse.getProductResponse().getId())
+                        .quantity(itemResponse.getQuantity())
+                        .build()))
+                .toList();
+
+        return invoiceCompleteInfoResponse;
+
+
     }
 
     @Override
@@ -173,18 +190,5 @@ public class InvoiceService implements IInvoiceService {
                 .map(item -> item.getProduct().getPrice().multiply(BigInteger.valueOf(item.getQuantity())))
                 .reduce(BigInteger.ZERO, BigInteger::add);
     }
-
-   /* public InvoiceCompleteInfoResponse getInvoiceByDocument(int documentNumber) {
-
-        Clients client = clientRepository.findByDocumentNumber(documentNumber)
-                .orElseThrow(() -> new BadRequestExeption("Client not found"));
-
-        Invoice invoice = invoiceRepository.findByClient(client)
-                .orElseThrow(() -> new BadRequestExeption("Invoice not found for the client"));
-
-        return entityToResponse(invoice);
-    }*/
-
-
 
 }
