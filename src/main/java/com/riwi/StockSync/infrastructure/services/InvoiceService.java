@@ -5,8 +5,10 @@ import com.riwi.StockSync.api.dto.response.*;
 import com.riwi.StockSync.domain.entities.*;
 import com.riwi.StockSync.domain.repositories.*;
 import com.riwi.StockSync.infrastructure.abstract_services.IInvoiceService;
+import com.riwi.StockSync.infrastructure.helpers.EmailHelper;
 import com.riwi.StockSync.util.exceptions.BadRequestExeption;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +27,9 @@ public class InvoiceService implements IInvoiceService {
     private final StoreRepository storeRepository;
     private final ClientRepository clientRepository;
     private final ProductRepository productRepository;
+
+    @Autowired
+    private final EmailHelper emailHelper;
 
     @Override
     public Page<InvoiceCompleteInfoResponse> getAll(int page, int size) {
@@ -72,6 +78,9 @@ public class InvoiceService implements IInvoiceService {
         invoice.setItemList(itemList);
         invoice.setTotalPurchases(Double.valueOf(String.valueOf(total)));
 
+        if (Objects.nonNull(client.getEmail())){
+            this.emailHelper.sendMail(invoice.getId(), store.getName(), client.getEmail(), client.getName(), employee.getName(), invoice.getDate(),  itemList, invoice.getTotalPurchases());
+        }
         return this.entityToResponse(this.invoiceRepository.save(invoice));
     }
 
