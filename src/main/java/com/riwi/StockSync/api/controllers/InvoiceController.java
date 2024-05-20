@@ -42,7 +42,10 @@ public class InvoiceController {
             @RequestBody
             InvoiceRequest invoice
     ){
-      return ResponseEntity.ok(this.iInvoiceService.create(invoice));
+
+        return ResponseEntity.ok(this.iInvoiceService.create(invoice));
+
+     
     }
 
     @Operation(summary ="Displays the information of an invoce"
