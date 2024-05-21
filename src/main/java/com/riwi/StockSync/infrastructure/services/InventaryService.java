@@ -2,6 +2,7 @@ package com.riwi.StockSync.infrastructure.services;
 
 
 import com.riwi.StockSync.api.dto.request.InventaryRequest;
+import com.riwi.StockSync.api.dto.response.InventaryResponse;
 import com.riwi.StockSync.api.dto.response.InventaryToStoreResponse;
 import com.riwi.StockSync.api.dto.response.ProductResponse;
 import com.riwi.StockSync.api.dto.response.StoreResponse;
@@ -13,15 +14,14 @@ import com.riwi.StockSync.domain.repositories.StoreRepository;
 import com.riwi.StockSync.infrastructure.abstract_services.IInventaryService;
 import com.riwi.StockSync.util.exceptions.BadRequestExeption;
 import lombok.AllArgsConstructor;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
@@ -76,7 +76,7 @@ public class InventaryService  implements IInventaryService {
 
     }
 
-    private InventaryToStoreResponse entityToResponse(Inventary entity){
+    private InventaryToStoreResponse entityToResponse(Inventary entity) {
 
         InventaryToStoreResponse response = new InventaryToStoreResponse();
         BeanUtils.copyProperties(entity, response);
@@ -93,32 +93,14 @@ public class InventaryService  implements IInventaryService {
 
         response.setProduct(productDto);
         response.setStore(storeDto);
-
-
-
-    List<ProductResponse> productDto = new ArrayList<>();
-    for (Product product : entity.getProducts()) {
-        ProductResponse productResponse = new ProductResponse();
-        BeanUtils.copyProperties(product, productResponse);
-        productDto.add(productResponse);
+        return  response;
     }
+
+
 
 
     private Inventary requestToEntity(InventaryRequest request, Inventary inventary){
         BeanUtils.copyProperties(request, inventary);
-
-
-        response.setProduct(productDto);
-        response.setStore(storeDto);
-
-        return response;
-    }
-
-    private Inventary requestToEntity(InventaryRequest request, Inventary inventary){
-        BeanUtils.copyProperties(request, inventary);
-
-
-        // inventary.setDateTime(request.getDateTime());
 
         return inventary;
     }
