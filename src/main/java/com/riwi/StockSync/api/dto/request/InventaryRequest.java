@@ -26,4 +26,7 @@ public class InventaryRequest {
     private List<ProductResponse> products;
 
 
+
 }
+
+
