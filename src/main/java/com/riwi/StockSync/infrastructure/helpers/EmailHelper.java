@@ -28,7 +28,7 @@ public class EmailHelper {
     public void sendMail(String idInvoice, String store, String destinity, String nameClient, String nameEmployee, LocalDate date, List<Item> itemList, Double totalPurchases){
 
         MimeMessage message = mailSender.createMimeMessage();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         String dateInvoice = date.format(formatter);
         String htmlContent = this.readHTMLTemplate(idInvoice, store, nameClient, dateInvoice, nameEmployee, itemList, totalPurchases);
@@ -58,11 +58,18 @@ public class EmailHelper {
 
             var html = lines.collect(Collectors.joining());
 
-            return html.replace("{idInvoice}", idInvoice). replace("{store}", store).replace("{nameClient}", nameClient).replace("{date}", date).replace("{nameEmployee}", nameEmployee).replace("{itemList}", itemList.toString()).replace("{totalPurchases}", String.valueOf(totalPurchases));
+            return html.replace("{idInvoice}", idInvoice).replace("{store}", store).replace("{nameClient}", nameClient).replace("{date}", date).replace("{nameEmployee}", nameEmployee).replace("{itemList}", buildItemListToString(itemList)).replace("{totalPurchases}", String.valueOf(totalPurchases));
 
         }catch (IOException e){
             System.out.println("The HTML could not be read.");
             throw new RuntimeException();
         }
+    }
+
+    private String buildItemListToString(List<Item> itemList){
+        return itemList.stream()
+                .map(item -> String.format("%s - %s - %s", item.getProduct().getName(), item.getQuantity(), item.getProduct().getPrice()))
+                .collect(Collectors.joining("                              "));
+
     }
 }
