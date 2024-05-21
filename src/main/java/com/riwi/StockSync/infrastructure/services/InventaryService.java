@@ -5,6 +5,7 @@ import com.riwi.StockSync.api.dto.response.InventaryToStoreResponse;
 import com.riwi.StockSync.api.dto.response.ProductResponse;
 import com.riwi.StockSync.api.dto.response.StoreResponse;
 import com.riwi.StockSync.domain.entities.Inventary;
+import com.riwi.StockSync.domain.entities.Product;
 import com.riwi.StockSync.domain.entities.Store;
 import com.riwi.StockSync.domain.repositories.InventaryRepository;
 import com.riwi.StockSync.domain.repositories.StoreRepository;
@@ -81,8 +82,12 @@ public class InventaryService  implements IInventaryService {
         StoreResponse storeDto = new StoreResponse();
         BeanUtils.copyProperties(entity.getStore(), storeDto);
 
-        List<ProductResponse> productDto = new ArrayList<ProductResponse>();
-        BeanUtils.copyProperties(entity.getProducts(), productDto);
+    List<ProductResponse> productDto = new ArrayList<>();
+    for (Product product : entity.getProducts()) {
+        ProductResponse productResponse = new ProductResponse();
+        BeanUtils.copyProperties(product, productResponse);
+        productDto.add(productResponse);
+    }
 
         response.setProduct(productDto);
         response.setStore(storeDto);
@@ -90,8 +95,10 @@ public class InventaryService  implements IInventaryService {
         return response;
     }
 
-    private Inventary requestToEntity(InventaryRequest entity, Inventary inventary){
-        inventary.setDateTime(entity.getDateTime());
+    private Inventary requestToEntity(InventaryRequest request, Inventary inventary){
+        BeanUtils.copyProperties(request, inventary);
+
+        // inventary.setDateTime(request.getDateTime());
 
         return inventary;
     }
