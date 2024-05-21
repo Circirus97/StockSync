@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigInteger;
+import java.util.List;
 
 @Data
 @Builder
@@ -32,6 +33,6 @@ public class ProductRequest {
 
     private String inventaryId;
 
-    //private List<ItemRequest>itemList;
+    // private List<ItemRequest>itemList;
 
 }
