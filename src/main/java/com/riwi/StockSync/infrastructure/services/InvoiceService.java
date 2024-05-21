@@ -81,10 +81,7 @@ public class InvoiceService implements IInvoiceService {
         invoice.setTotalPurchases(Double.valueOf(String.valueOf(total)));
 
 
-        if (Objects.nonNull(client.getEmail())){
-            this.emailHelper.sendMail(invoice.getId(), store.getName(), client.getEmail(), client.getName(), employee.getName(), invoice.getDate(),  itemList, invoice.getTotalPurchases());
-        }
-        return this.entityToResponse(this.invoiceRepository.save(invoice));
+
 
         InvoiceCompleteInfoResponse invoiceCompleteInfoResponse =  this.entityToResponse(this.invoiceRepository.save(invoice));
 
@@ -95,6 +92,9 @@ public class InvoiceService implements IInvoiceService {
                         .quantity(itemResponse.getQuantity())
                         .build()))
                 .toList();
+        if (Objects.nonNull(client.getEmail())){
+            this.emailHelper.sendMail(invoiceCompleteInfoResponse.getId(), store.getName(), client.getEmail(), client.getName(), employee.getName(), invoice.getDate(),  itemList, invoice.getTotalPurchases());
+        }
 
         return invoiceCompleteInfoResponse;
 
