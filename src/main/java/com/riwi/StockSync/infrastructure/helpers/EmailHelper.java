@@ -1,4 +1,4 @@
-package com.riwi.StockSync.infrastructure.helpers;
+// package com.riwi.StockSync.infrastructure.helpers;
 
 import com.riwi.StockSync.domain.entities.Item;
 import jakarta.mail.internet.InternetAddress;
@@ -19,9 +19,9 @@ import java.util.List;
 
 import java.util.stream.Collectors;
 
-@Component
-@AllArgsConstructor
-public class EmailHelper {
+// @Component
+// @AllArgsConstructor
+// public class EmailHelper {
 
     //Inyección servicio de email de la librería
     private final JavaMailSender mailSender;
@@ -56,9 +56,9 @@ public class EmailHelper {
         //Se indica ubicación del template
         final Path path = Paths.get("src/main/resources/emails/email_template.html");
 
-        try(var lines = Files.lines(path)){
+//         try(var lines = Files.lines(path)){
 
-            var html = lines.collect(Collectors.joining());
+//             var html = lines.collect(Collectors.joining());
 
             return html.replace("{idInvoice}", idInvoice).replace("{store}", store).replace("{nameClient}", nameClient).replace("{date}", date).replace("{nameEmployee}", nameEmployee).replace("{itemList}", buildItemListToString(itemList)).replace("{totalPurchases}", String.valueOf(totalPurchases));
 

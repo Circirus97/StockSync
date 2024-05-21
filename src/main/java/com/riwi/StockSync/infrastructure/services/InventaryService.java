@@ -83,6 +83,7 @@ public class InventaryService  implements IInventaryService {
         StoreResponse storeDto = new StoreResponse();
         BeanUtils.copyProperties(entity.getStore(), storeDto);
 
+
         List<ProductResponse> productDto = new ArrayList<>();
         for (Product product : entity.getProducts()) {
             ProductResponse productResponse = new ProductResponse();
@@ -93,11 +94,29 @@ public class InventaryService  implements IInventaryService {
         response.setProduct(productDto);
         response.setStore(storeDto);
 
+
+
+    List<ProductResponse> productDto = new ArrayList<>();
+    for (Product product : entity.getProducts()) {
+        ProductResponse productResponse = new ProductResponse();
+        BeanUtils.copyProperties(product, productResponse);
+        productDto.add(productResponse);
+    }
+
+
+    private Inventary requestToEntity(InventaryRequest request, Inventary inventary){
+        BeanUtils.copyProperties(request, inventary);
+
+
+        response.setProduct(productDto);
+        response.setStore(storeDto);
+
         return response;
     }
 
     private Inventary requestToEntity(InventaryRequest request, Inventary inventary){
         BeanUtils.copyProperties(request, inventary);
+
 
         // inventary.setDateTime(request.getDateTime());
 
