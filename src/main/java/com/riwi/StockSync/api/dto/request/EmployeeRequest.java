@@ -17,9 +17,9 @@ public class EmployeeRequest {
     private String id;
     @NotBlank(message = ErrorMessage.RequiredName)
     private String name;
-    @NotNull(message = ErrorMessage.MaxCharacters15)
+    @NotBlank(message = ErrorMessage.MaxCharacters15)
     private String identity;
-    @NotNull
+    @NotBlank
     private String contact;
     private String storeId;
 
