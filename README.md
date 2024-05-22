@@ -22,3 +22,5 @@ especialmente aquellos que operan múltiples tiendas simultáneamente.
 
 También beneficia a los empleados de las tiendas al facilitarles tareas como la generación de facturas y la 
 gestión de clientes, optimizando así su tiempo y aumentando la precisión en sus operaciones diarias.
+
+https://drive.google.com/drive/folders/1E-j62Jlr19fmWiq7NxioWj-7x3uo5caw?usp=drive_link
